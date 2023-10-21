@@ -1,0 +1,509 @@
+2023-10-10 10:27:24.810 |-INFO  [main] com.example.springboot1.Springboot1Application [55] -| Starting Springboot1Application using Java 17.0.8 on DESKTOP-N5IT79T with PID 18708 (E:\project\IDEA\project\springboot1\target\classes started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 10:27:24.813 |-INFO  [main] com.example.springboot1.Springboot1Application [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 10:27:26.289 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:27:26.290 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:27:26.290 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:27:26.290 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:27:26.290 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 10:27:26.949 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [108] -| Tomcat initialized with port(s): 9091 (http)
+2023-10-10 10:27:26.964 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Initializing ProtocolHandler ["http-nio-9091"]
+2023-10-10 10:27:26.965 |-INFO  [main] org.apache.catalina.core.StandardService [173] -| Starting service [Tomcat]
+2023-10-10 10:27:26.965 |-INFO  [main] org.apache.catalina.core.StandardEngine [173] -| Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-10-10 10:27:27.100 |-INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [173] -| Initializing Spring embedded WebApplicationContext
+2023-10-10 10:27:27.100 |-INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [292] -| Root WebApplicationContext: initialization completed in 2237 ms
+2023-10-10 10:27:27.937 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 10:27:28.247 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Starting ProtocolHandler ["http-nio-9091"]
+2023-10-10 10:27:28.279 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [220] -| Tomcat started on port(s): 9091 (http) with context path ''
+2023-10-10 10:27:28.279 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 10:27:28.291 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 10:27:28.310 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 10:27:28.421 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 10:27:28.436 |-INFO  [main] com.example.springboot1.Springboot1Application [61] -| Started Springboot1Application in 4.625 seconds (JVM running for 6.055)
+2023-10-10 10:27:31.241 |-INFO  [http-nio-9091-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [173] -| Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-10 10:27:31.241 |-INFO  [http-nio-9091-exec-1] org.springframework.web.servlet.DispatcherServlet [525] -| Initializing Servlet 'dispatcherServlet'
+2023-10-10 10:27:31.242 |-INFO  [http-nio-9091-exec-1] org.springframework.web.servlet.DispatcherServlet [547] -| Completed initialization in 1 ms
+2023-10-10 10:27:31.262 |-ERROR [http-nio-9091-exec-1] com.example.springboot1.logging.GlobalExceptionHandler [27] -| ===========全局统一异常处理============
+2023-10-10 10:27:31.263 |-ERROR [http-nio-9091-exec-1] com.example.springboot1.logging.GlobalExceptionHandler [28] -| org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'image_id' for method parameter type String is not present
+	at org.springframework.web.method.annotation.RequestParamMethodArgumentResolver.handleMissingValueInternal(RequestParamMethodArgumentResolver.java:218)
+	at org.springframework.web.method.annotation.RequestParamMethodArgumentResolver.handleMissingValue(RequestParamMethodArgumentResolver.java:193)
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:114)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:179)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:146)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:670)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+2023-10-10 10:31:16.903 |-INFO  [main] com.example.springboot1.Springboot1Application [55] -| Starting Springboot1Application using Java 17.0.8 on DESKTOP-N5IT79T with PID 2236 (E:\project\IDEA\project\springboot1\target\classes started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 10:31:16.905 |-INFO  [main] com.example.springboot1.Springboot1Application [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 10:31:17.493 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:31:17.493 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:31:17.493 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:31:17.493 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:31:17.494 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 10:31:17.783 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [108] -| Tomcat initialized with port(s): 9091 (http)
+2023-10-10 10:31:17.790 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Initializing ProtocolHandler ["http-nio-9091"]
+2023-10-10 10:31:17.790 |-INFO  [main] org.apache.catalina.core.StandardService [173] -| Starting service [Tomcat]
+2023-10-10 10:31:17.790 |-INFO  [main] org.apache.catalina.core.StandardEngine [173] -| Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-10-10 10:31:17.863 |-INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [173] -| Initializing Spring embedded WebApplicationContext
+2023-10-10 10:31:17.899 |-INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [292] -| Root WebApplicationContext: initialization completed in 955 ms
+2023-10-10 10:31:18.389 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 10:31:18.595 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Starting ProtocolHandler ["http-nio-9091"]
+2023-10-10 10:31:18.609 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [220] -| Tomcat started on port(s): 9091 (http) with context path ''
+2023-10-10 10:31:18.610 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 10:31:18.620 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 10:31:18.636 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 10:31:18.744 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 10:31:18.756 |-INFO  [main] com.example.springboot1.Springboot1Application [61] -| Started Springboot1Application in 2.223 seconds (JVM running for 2.71)
+2023-10-10 10:34:59.135 |-INFO  [main] com.example.springboot1.Springboot1Application [55] -| Starting Springboot1Application using Java 17.0.8 on DESKTOP-N5IT79T with PID 19520 (E:\project\IDEA\project\springboot1\target\classes started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 10:34:59.138 |-INFO  [main] com.example.springboot1.Springboot1Application [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 10:34:59.719 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:34:59.719 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:34:59.719 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:34:59.720 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:34:59.720 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 10:35:00.022 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [108] -| Tomcat initialized with port(s): 9091 (http)
+2023-10-10 10:35:00.029 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Initializing ProtocolHandler ["http-nio-9091"]
+2023-10-10 10:35:00.030 |-INFO  [main] org.apache.catalina.core.StandardService [173] -| Starting service [Tomcat]
+2023-10-10 10:35:00.030 |-INFO  [main] org.apache.catalina.core.StandardEngine [173] -| Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-10-10 10:35:00.104 |-INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [173] -| Initializing Spring embedded WebApplicationContext
+2023-10-10 10:35:00.104 |-INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [292] -| Root WebApplicationContext: initialization completed in 927 ms
+2023-10-10 10:35:00.604 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 10:35:00.807 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Starting ProtocolHandler ["http-nio-9091"]
+2023-10-10 10:35:00.822 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [220] -| Tomcat started on port(s): 9091 (http) with context path ''
+2023-10-10 10:35:00.823 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 10:35:00.835 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 10:35:00.853 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 10:35:00.956 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 10:35:00.969 |-INFO  [main] com.example.springboot1.Springboot1Application [61] -| Started Springboot1Application in 2.232 seconds (JVM running for 2.7)
+2023-10-10 10:35:07.459 |-INFO  [http-nio-9091-exec-2] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [173] -| Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-10 10:35:07.459 |-INFO  [http-nio-9091-exec-2] org.springframework.web.servlet.DispatcherServlet [525] -| Initializing Servlet 'dispatcherServlet'
+2023-10-10 10:35:07.460 |-INFO  [http-nio-9091-exec-2] org.springframework.web.servlet.DispatcherServlet [547] -| Completed initialization in 1 ms
+2023-10-10 10:35:07.525 |-INFO  [http-nio-9091-exec-2] com.zaxxer.hikari.HikariDataSource [110] -| HikariPool-1 - Starting...
+2023-10-10 10:35:08.314 |-INFO  [http-nio-9091-exec-2] com.zaxxer.hikari.HikariDataSource [123] -| HikariPool-1 - Start completed.
+2023-10-10 10:36:16.259 |-ERROR [http-nio-9091-exec-5] com.example.springboot1.logging.GlobalExceptionHandler [27] -| ===========全局统一异常处理============
+2023-10-10 10:36:16.260 |-ERROR [http-nio-9091-exec-5] com.example.springboot1.logging.GlobalExceptionHandler [28] -| org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'id' for method parameter type Integer is present but converted to null
+	at org.springframework.web.method.annotation.RequestParamMethodArgumentResolver.handleMissingValueInternal(RequestParamMethodArgumentResolver.java:218)
+	at org.springframework.web.method.annotation.RequestParamMethodArgumentResolver.handleMissingValueAfterConversion(RequestParamMethodArgumentResolver.java:200)
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:138)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:179)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:146)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:670)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+2023-10-10 10:36:21.787 |-INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource [350] -| HikariPool-1 - Shutdown initiated...
+2023-10-10 10:36:21.827 |-INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource [352] -| HikariPool-1 - Shutdown completed.
+2023-10-10 10:36:25.154 |-INFO  [main] com.example.springboot1.Springboot1Application [55] -| Starting Springboot1Application using Java 17.0.8 on DESKTOP-N5IT79T with PID 16284 (E:\project\IDEA\project\springboot1\target\classes started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 10:36:25.195 |-INFO  [main] com.example.springboot1.Springboot1Application [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 10:36:25.782 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:36:25.782 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:36:25.782 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:36:25.783 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:36:25.783 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 10:36:26.108 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [108] -| Tomcat initialized with port(s): 9091 (http)
+2023-10-10 10:36:26.121 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Initializing ProtocolHandler ["http-nio-9091"]
+2023-10-10 10:36:26.122 |-INFO  [main] org.apache.catalina.core.StandardService [173] -| Starting service [Tomcat]
+2023-10-10 10:36:26.122 |-INFO  [main] org.apache.catalina.core.StandardEngine [173] -| Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-10-10 10:36:26.198 |-INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [173] -| Initializing Spring embedded WebApplicationContext
+2023-10-10 10:36:26.199 |-INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [292] -| Root WebApplicationContext: initialization completed in 966 ms
+2023-10-10 10:36:26.691 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 10:36:26.896 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Starting ProtocolHandler ["http-nio-9091"]
+2023-10-10 10:36:26.910 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [220] -| Tomcat started on port(s): 9091 (http) with context path ''
+2023-10-10 10:36:26.911 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 10:36:26.921 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 10:36:26.939 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 10:36:27.041 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 10:36:27.054 |-INFO  [main] com.example.springboot1.Springboot1Application [61] -| Started Springboot1Application in 2.31 seconds (JVM running for 2.773)
+2023-10-10 10:36:32.593 |-INFO  [http-nio-9091-exec-2] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [173] -| Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-10 10:36:32.593 |-INFO  [http-nio-9091-exec-2] org.springframework.web.servlet.DispatcherServlet [525] -| Initializing Servlet 'dispatcherServlet'
+2023-10-10 10:36:32.594 |-INFO  [http-nio-9091-exec-2] org.springframework.web.servlet.DispatcherServlet [547] -| Completed initialization in 1 ms
+2023-10-10 10:36:32.627 |-INFO  [http-nio-9091-exec-2] com.zaxxer.hikari.HikariDataSource [110] -| HikariPool-1 - Starting...
+2023-10-10 10:36:32.858 |-INFO  [http-nio-9091-exec-2] com.zaxxer.hikari.HikariDataSource [123] -| HikariPool-1 - Start completed.
+2023-10-10 10:39:21.280 |-INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource [350] -| HikariPool-1 - Shutdown initiated...
+2023-10-10 10:39:21.285 |-INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource [352] -| HikariPool-1 - Shutdown completed.
+2023-10-10 10:39:24.536 |-INFO  [main] com.example.springboot1.Springboot1Application [55] -| Starting Springboot1Application using Java 17.0.8 on DESKTOP-N5IT79T with PID 16812 (E:\project\IDEA\project\springboot1\target\classes started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 10:39:24.538 |-INFO  [main] com.example.springboot1.Springboot1Application [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 10:39:25.097 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:39:25.097 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:39:25.097 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:39:25.097 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:39:25.098 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 10:39:25.406 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [108] -| Tomcat initialized with port(s): 9091 (http)
+2023-10-10 10:39:25.414 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Initializing ProtocolHandler ["http-nio-9091"]
+2023-10-10 10:39:25.414 |-INFO  [main] org.apache.catalina.core.StandardService [173] -| Starting service [Tomcat]
+2023-10-10 10:39:25.414 |-INFO  [main] org.apache.catalina.core.StandardEngine [173] -| Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-10-10 10:39:25.493 |-INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [173] -| Initializing Spring embedded WebApplicationContext
+2023-10-10 10:39:25.494 |-INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [292] -| Root WebApplicationContext: initialization completed in 918 ms
+2023-10-10 10:39:26.032 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 10:39:26.258 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Starting ProtocolHandler ["http-nio-9091"]
+2023-10-10 10:39:26.272 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [220] -| Tomcat started on port(s): 9091 (http) with context path ''
+2023-10-10 10:39:26.273 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 10:39:26.284 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 10:39:26.303 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 10:39:26.415 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 10:39:26.434 |-INFO  [main] com.example.springboot1.Springboot1Application [61] -| Started Springboot1Application in 2.263 seconds (JVM running for 2.737)
+2023-10-10 10:39:27.989 |-INFO  [http-nio-9091-exec-4] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [173] -| Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-10 10:39:27.989 |-INFO  [http-nio-9091-exec-4] org.springframework.web.servlet.DispatcherServlet [525] -| Initializing Servlet 'dispatcherServlet'
+2023-10-10 10:39:27.990 |-INFO  [http-nio-9091-exec-4] org.springframework.web.servlet.DispatcherServlet [547] -| Completed initialization in 1 ms
+2023-10-10 10:39:28.023 |-INFO  [http-nio-9091-exec-4] com.zaxxer.hikari.HikariDataSource [110] -| HikariPool-1 - Starting...
+2023-10-10 10:39:28.245 |-INFO  [http-nio-9091-exec-4] com.zaxxer.hikari.HikariDataSource [123] -| HikariPool-1 - Start completed.
+2023-10-10 10:51:17.127 |-INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource [350] -| HikariPool-1 - Shutdown initiated...
+2023-10-10 10:51:17.132 |-INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource [352] -| HikariPool-1 - Shutdown completed.
+2023-10-10 10:59:24.474 |-INFO  [main] com.example.springboot1.Springboot1Application [55] -| Starting Springboot1Application using Java 17.0.8 on DESKTOP-N5IT79T with PID 9984 (E:\project\IDEA\project\springboot1\target\classes started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 10:59:24.476 |-INFO  [main] com.example.springboot1.Springboot1Application [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 10:59:25.045 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:59:25.045 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:59:25.045 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:59:25.045 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 10:59:25.046 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 10:59:25.336 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [108] -| Tomcat initialized with port(s): 9091 (http)
+2023-10-10 10:59:25.343 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Initializing ProtocolHandler ["http-nio-9091"]
+2023-10-10 10:59:25.343 |-INFO  [main] org.apache.catalina.core.StandardService [173] -| Starting service [Tomcat]
+2023-10-10 10:59:25.344 |-INFO  [main] org.apache.catalina.core.StandardEngine [173] -| Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-10-10 10:59:25.418 |-INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [173] -| Initializing Spring embedded WebApplicationContext
+2023-10-10 10:59:25.418 |-INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [292] -| Root WebApplicationContext: initialization completed in 906 ms
+2023-10-10 10:59:25.919 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 10:59:26.124 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Starting ProtocolHandler ["http-nio-9091"]
+2023-10-10 10:59:26.139 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [220] -| Tomcat started on port(s): 9091 (http) with context path ''
+2023-10-10 10:59:26.140 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 10:59:26.151 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 10:59:26.168 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 10:59:26.273 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 10:59:26.285 |-INFO  [main] com.example.springboot1.Springboot1Application [61] -| Started Springboot1Application in 2.185 seconds (JVM running for 2.68)
+2023-10-10 15:18:30.582 |-INFO  [main] com.example.springboot1.Springboot1Application [55] -| Starting Springboot1Application using Java 17.0.8 on DESKTOP-N5IT79T with PID 18656 (E:\project\IDEA\project\springboot1\target\classes started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 15:18:30.584 |-INFO  [main] com.example.springboot1.Springboot1Application [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 15:18:31.139 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:18:31.139 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:18:31.139 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:18:31.139 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:18:31.140 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 15:18:31.421 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [108] -| Tomcat initialized with port(s): 9091 (http)
+2023-10-10 15:18:31.428 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Initializing ProtocolHandler ["http-nio-9091"]
+2023-10-10 15:18:31.428 |-INFO  [main] org.apache.catalina.core.StandardService [173] -| Starting service [Tomcat]
+2023-10-10 15:18:31.428 |-INFO  [main] org.apache.catalina.core.StandardEngine [173] -| Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-10-10 15:18:31.507 |-INFO  [main] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [173] -| Initializing Spring embedded WebApplicationContext
+2023-10-10 15:18:31.507 |-INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [292] -| Root WebApplicationContext: initialization completed in 885 ms
+2023-10-10 15:18:31.996 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 15:18:32.197 |-INFO  [main] org.apache.coyote.http11.Http11NioProtocol [173] -| Starting ProtocolHandler ["http-nio-9091"]
+2023-10-10 15:18:32.211 |-INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [220] -| Tomcat started on port(s): 9091 (http) with context path ''
+2023-10-10 15:18:32.212 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 15:18:32.222 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 15:18:32.240 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 15:18:32.340 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 15:18:32.353 |-INFO  [main] com.example.springboot1.Springboot1Application [61] -| Started Springboot1Application in 2.148 seconds (JVM running for 2.597)
+2023-10-10 15:18:49.706 |-WARN  [main] org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer [78] -| 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/35310/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/35310/.m2/repository/org/json/json/20211205/json-20211205.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2023-10-10 15:18:49.719 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [55] -| Starting Springboot1ApplicationTests using Java 17.0.8 on DESKTOP-N5IT79T with PID 15308 (started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 15:18:49.720 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 15:18:50.476 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:18:50.477 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:18:50.478 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:18:50.478 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:18:50.479 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 15:18:51.766 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 15:18:52.297 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 15:18:52.313 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 15:18:52.335 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 15:18:52.479 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 15:18:52.501 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [61] -| Started Springboot1ApplicationTests in 3.141 seconds (JVM running for 3.949)
+2023-10-10 15:21:21.186 |-WARN  [main] org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer [78] -| 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/35310/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/35310/.m2/repository/org/json/json/20211205/json-20211205.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2023-10-10 15:21:21.201 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [55] -| Starting Springboot1ApplicationTests using Java 17.0.8 on DESKTOP-N5IT79T with PID 24120 (started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 15:21:21.201 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 15:21:22.126 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:21:22.127 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:21:22.127 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:21:22.127 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:21:22.128 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 15:21:23.346 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 15:21:23.970 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 15:21:23.984 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 15:21:24.010 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 15:21:24.156 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 15:21:24.178 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [61] -| Started Springboot1ApplicationTests in 3.436 seconds (JVM running for 4.711)
+2023-10-10 15:21:39.267 |-WARN  [main] org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer [78] -| 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/35310/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/35310/.m2/repository/org/json/json/20211205/json-20211205.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2023-10-10 15:21:39.281 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [55] -| Starting Springboot1ApplicationTests using Java 17.0.8 on DESKTOP-N5IT79T with PID 13596 (started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 15:21:39.283 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 15:21:40.032 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:21:40.032 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:21:40.032 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:21:40.032 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:21:40.033 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 15:21:41.079 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 15:21:41.607 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 15:21:41.620 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 15:21:41.644 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 15:21:41.786 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 15:21:41.807 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [61] -| Started Springboot1ApplicationTests in 2.858 seconds (JVM running for 3.701)
+2023-10-10 15:22:14.568 |-WARN  [main] org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer [78] -| 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/35310/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/35310/.m2/repository/org/json/json/20211205/json-20211205.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2023-10-10 15:22:14.581 |-INFO  [main] com.example.springboot1.service.Impl.GetAppSecretServiceImplTest [55] -| Starting GetAppSecretServiceImplTest using Java 17.0.8 on DESKTOP-N5IT79T with PID 2624 (started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 15:22:14.582 |-INFO  [main] com.example.springboot1.service.Impl.GetAppSecretServiceImplTest [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 15:22:15.513 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:22:15.514 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:22:15.514 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:22:15.514 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:22:15.515 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 15:22:16.769 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 15:22:17.463 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 15:22:17.481 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 15:22:17.513 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 15:22:17.674 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 15:22:17.699 |-INFO  [main] com.example.springboot1.service.Impl.GetAppSecretServiceImplTest [61] -| Started GetAppSecretServiceImplTest in 3.455 seconds (JVM running for 4.626)
+2023-10-10 15:22:18.136 |-INFO  [main] com.zaxxer.hikari.HikariDataSource [110] -| HikariPool-1 - Starting...
+2023-10-10 15:22:18.556 |-INFO  [main] com.zaxxer.hikari.HikariDataSource [123] -| HikariPool-1 - Start completed.
+2023-10-10 15:22:28.360 |-INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource [350] -| HikariPool-1 - Shutdown initiated...
+2023-10-10 15:22:28.387 |-INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource [352] -| HikariPool-1 - Shutdown completed.
+2023-10-10 15:23:42.889 |-WARN  [main] org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer [78] -| 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/35310/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/35310/.m2/repository/org/json/json/20211205/json-20211205.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2023-10-10 15:23:42.902 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [55] -| Starting Springboot1ApplicationTests using Java 17.0.8 on DESKTOP-N5IT79T with PID 10060 (started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 15:23:42.903 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 15:23:43.684 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:23:43.684 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:23:43.685 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:23:43.685 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:23:43.685 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 15:23:44.829 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 15:23:45.374 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 15:23:45.387 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 15:23:45.409 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 15:23:45.570 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 15:23:45.594 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [61] -| Started Springboot1ApplicationTests in 3.004 seconds (JVM running for 3.848)
+2023-10-10 15:28:06.368 |-WARN  [main] org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer [78] -| 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/35310/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/35310/.m2/repository/org/json/json/20211205/json-20211205.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2023-10-10 15:28:06.381 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [55] -| Starting Springboot1ApplicationTests using Java 17.0.8 on DESKTOP-N5IT79T with PID 7928 (started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 15:28:06.382 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 15:28:07.118 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:28:07.118 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:28:07.118 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:28:07.119 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:28:07.119 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 15:28:08.246 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 15:28:08.766 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 15:28:08.781 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 15:28:08.806 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 15:28:08.948 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 15:28:08.968 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [61] -| Started Springboot1ApplicationTests in 2.918 seconds (JVM running for 3.769)
+2023-10-10 15:28:24.428 |-WARN  [main] org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer [78] -| 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/35310/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/35310/.m2/repository/org/json/json/20211205/json-20211205.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2023-10-10 15:28:24.441 |-INFO  [main] com.example.springboot1.service.Impl.GetAppSecretServiceImplTest [55] -| Starting GetAppSecretServiceImplTest using Java 17.0.8 on DESKTOP-N5IT79T with PID 8784 (started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 15:28:24.441 |-INFO  [main] com.example.springboot1.service.Impl.GetAppSecretServiceImplTest [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 15:28:25.132 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:28:25.132 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:28:25.132 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:28:25.133 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:28:25.133 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 15:28:26.202 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 15:28:26.733 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 15:28:26.746 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 15:28:26.770 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 15:28:26.938 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 15:28:26.962 |-INFO  [main] com.example.springboot1.service.Impl.GetAppSecretServiceImplTest [61] -| Started GetAppSecretServiceImplTest in 2.82 seconds (JVM running for 3.805)
+2023-10-10 15:28:27.421 |-INFO  [main] com.zaxxer.hikari.HikariDataSource [110] -| HikariPool-1 - Starting...
+2023-10-10 15:28:27.766 |-INFO  [main] com.zaxxer.hikari.HikariDataSource [123] -| HikariPool-1 - Start completed.
+2023-10-10 15:28:27.845 |-INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource [350] -| HikariPool-1 - Shutdown initiated...
+2023-10-10 15:28:27.849 |-INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource [352] -| HikariPool-1 - Shutdown completed.
+2023-10-10 15:31:20.403 |-WARN  [main] org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer [78] -| 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/35310/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/35310/.m2/repository/org/json/json/20211205/json-20211205.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2023-10-10 15:31:20.419 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [55] -| Starting Springboot1ApplicationTests using Java 17.0.8 on DESKTOP-N5IT79T with PID 9268 (started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 15:31:20.420 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 15:31:21.188 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:31:21.188 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:31:21.189 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:31:21.189 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:31:21.189 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 15:31:22.253 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 15:31:22.778 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 15:31:22.794 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 15:31:22.819 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 15:31:22.964 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 15:31:22.986 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [61] -| Started Springboot1ApplicationTests in 2.904 seconds (JVM running for 3.74)
+2023-10-10 15:31:33.396 |-WARN  [main] org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer [78] -| 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/35310/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/35310/.m2/repository/org/json/json/20211205/json-20211205.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2023-10-10 15:31:33.408 |-INFO  [main] com.example.springboot1.service.Impl.GetAppSecretServiceImplTest [55] -| Starting GetAppSecretServiceImplTest using Java 17.0.8 on DESKTOP-N5IT79T with PID 22980 (started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 15:31:33.409 |-INFO  [main] com.example.springboot1.service.Impl.GetAppSecretServiceImplTest [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 15:31:34.109 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:31:34.109 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:31:34.109 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:31:34.109 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:31:34.110 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 15:31:35.156 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 15:31:35.618 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 15:31:35.643 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 15:31:35.668 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 15:31:35.796 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 15:31:35.815 |-INFO  [main] com.example.springboot1.service.Impl.GetAppSecretServiceImplTest [61] -| Started GetAppSecretServiceImplTest in 2.769 seconds (JVM running for 3.563)
+2023-10-10 15:31:36.173 |-INFO  [main] com.zaxxer.hikari.HikariDataSource [110] -| HikariPool-1 - Starting...
+2023-10-10 15:31:36.504 |-INFO  [main] com.zaxxer.hikari.HikariDataSource [123] -| HikariPool-1 - Start completed.
+2023-10-10 15:31:36.571 |-INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource [350] -| HikariPool-1 - Shutdown initiated...
+2023-10-10 15:31:36.574 |-INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource [352] -| HikariPool-1 - Shutdown completed.
+2023-10-10 15:32:29.118 |-WARN  [main] org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer [78] -| 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/35310/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/35310/.m2/repository/org/json/json/20211205/json-20211205.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2023-10-10 15:32:29.130 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [55] -| Starting Springboot1ApplicationTests using Java 17.0.8 on DESKTOP-N5IT79T with PID 18100 (started by 35310 in E:\project\IDEA\project\springboot1)
+2023-10-10 15:32:29.131 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [631] -| No active profile set, falling back to 1 default profile: "default"
+2023-10-10 15:32:29.908 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSecretMapper' and 'com.example.springboot1.mapper.GetAppSecretMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:32:29.909 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getAppSignMapper' and 'com.example.springboot1.mapper.GetAppSignMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:32:29.909 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'getImageMapper' and 'com.example.springboot1.mapper.GetImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:32:29.909 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| Skipping MapperFactoryBean with name 'imageMapper' and 'com.example.springboot1.mapper.ImageMapper' mapperInterface. Bean already defined with the same name!
+2023-10-10 15:32:29.909 |-WARN  [main] org.mybatis.spring.mapper.ClassPathMapperScanner [44] -| No MyBatis mapper was found in '[com.example.springboot1.mapper]' package. Please check your configuration.
+2023-10-10 15:32:31.059 |-INFO  [main] springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [69] -| Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-10-10 15:32:31.567 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [147] -| Context refreshed
+2023-10-10 15:32:31.582 |-INFO  [main] springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [150] -| Found 1 custom documentation plugin(s)
+2023-10-10 15:32:31.606 |-INFO  [main] springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [41] -| Scanning for api listing references
+2023-10-10 15:32:31.743 |-INFO  [main] springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [40] -| Generating unique operation named: getSignUsingGET_1
+2023-10-10 15:32:31.761 |-INFO  [main] com.example.springboot1.Springboot1ApplicationTests [61] -| Started Springboot1ApplicationTests in 2.929 seconds (JVM running for 3.768)
