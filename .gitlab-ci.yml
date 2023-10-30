@@ -4,10 +4,12 @@ stages:
 
 build-springboot:
   stage: build
+  script:
+    - mvn clean package
   only:
-    -main
+    - main
   tags:
-    -quality
+    - quality
 
 deploy-springboot:
   stage: deploy
