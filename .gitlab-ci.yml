@@ -6,6 +6,7 @@ build-springboot:
   stage: build
   script:
     - source /etc/profile
+    - mvn package
   only:
     - main
   tags:
