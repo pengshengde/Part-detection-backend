@@ -11,6 +11,10 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  servlet:
+    multipart:
+      max-file-size: 10MB  #最大文件 100M
+      max-request-size: 10MB
 
 mybatis:
   mapper-locations:
@@ -23,5 +27,11 @@ mybatis-plus:
 
 logging:
   config: classpath:logback-spring.xml
+
+serverInfo:
+  # baseurl项目部署后的访问地址
+  baseurl: http://172.20.138.208:9099/image/
+    #uploadpath为上传文件的保存路径
+  uploadpath: \home\image
 
 
