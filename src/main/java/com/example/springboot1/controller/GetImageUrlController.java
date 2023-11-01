@@ -19,7 +19,7 @@ public class GetImageUrlController {
 
     @Autowired
     private LocalConfig localConfig;
-    @PostMapping("/image")
+    @PostMapping("/uploadimage")
     public String uploadImage(MultipartFile file){
         long size = (long) file.getSize();
         if (size > localConfig.getMaxFileSize()) {
