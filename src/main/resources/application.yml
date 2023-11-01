@@ -30,8 +30,8 @@ logging:
 
 serverInfo:
   # baseurl项目部署后的访问地址
-  baseurl: http://172.20.138.208:9099/image/
+  baseurl: http://172.20.138.208:9090/
     #uploadpath为上传文件的保存路径
-  uploadpath: \home\image
-
+  uploadpath: /home/images
+#  uploadpath: E:\project\IDEA\project\system
 

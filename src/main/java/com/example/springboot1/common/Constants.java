@@ -28,4 +28,6 @@ public interface Constants {
     String CODE_4006 = "4006";  // 用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）
     String CODE_4007 = "4007";  // 用户传过来的sign为空，请检查sign值
     String CODE_5000 = "5000";  // 服务器发生错误，用户将无法判断发出的请求是否成功
+
+    String CODE_6000 = "6000"; // 图片的Url已存在
 }

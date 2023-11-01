@@ -66,4 +66,8 @@ public class Result {
         return new Result(Constants.CODE_5000, "系统错误", null);
     }
 
+    public static Result urlIsExist(Object data) {
+        return new Result(Constants.CODE_6000, "该图片url已存在", data);
+    }
+
 }

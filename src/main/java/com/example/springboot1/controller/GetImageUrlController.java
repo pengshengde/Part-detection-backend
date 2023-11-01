@@ -1,37 +1,39 @@
 package com.example.springboot1.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.springboot1.Entity.ImageInfo;
+import com.example.springboot1.common.Result;
 import com.example.springboot1.config.LocalConfig;
-import com.example.springboot1.service.GetImageUrlService;
+import com.example.springboot1.service.Impl.GetImageUrlServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Controller
-@RequestMapping("/api")
+@RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping("/geturl")
 public class GetImageUrlController {
 
     @Autowired
-    GetImageUrlService getImageUrlService;
+    GetImageUrlServiceImpl getImageUrlServiceImpl;
 
     @Autowired
     private LocalConfig localConfig;
-    @PostMapping("/uploadimage")
-    public String uploadImage(MultipartFile file){
-        long size = (long) file.getSize();
-        if (size > localConfig.getMaxFileSize()) {
-            return "上传文件过大，请上传小于100MB大小的文件";
+
+    @PostMapping
+    public Result uploadImage(MultipartFile file){
+
+        String imageName = file.getOriginalFilename();
+        QueryWrapper<ImageInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("image_name",imageName);
+        if (getImageUrlServiceImpl.getOne(queryWrapper)!=null){
+            return Result.urlIsExist(getImageUrlServiceImpl.getOne(queryWrapper).getImageUrl());
         }
 
-        ImageInfo imageInfo = getImageUrlService.uploadImage(file);
 
-        if (imageInfo.getFileUrl() == null){
-            return "保存图片失败";
-        }
-
-        return imageInfo.getFileUrl();
+        ImageInfo imageInfo = getImageUrlServiceImpl.uploadImage(file);
+        getImageUrlServiceImpl.save(imageInfo);
+        String imageUrl = imageInfo.getImageUrl();
+        return Result.success(imageUrl);
     }
 }

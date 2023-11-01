@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+
 @Component
 @Data
 public class LocalConfig {
@@ -23,7 +25,6 @@ public class LocalConfig {
         return maxSize;
     }
 
-    public LocalConfig() {
-    }
+
 
 }
