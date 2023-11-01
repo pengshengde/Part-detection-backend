@@ -20,7 +20,7 @@ public class GetImageUrlController {
     @Autowired
     private LocalConfig localConfig;
     @PostMapping("/image")
-    public String uploadImage(@RequestParam(value = "file") MultipartFile file){
+    public String uploadImage(MultipartFile file){
         long size = (long) file.getSize();
         if (size > localConfig.getMaxFileSize()) {
             return "上传文件过大，请上传小于100MB大小的文件";
