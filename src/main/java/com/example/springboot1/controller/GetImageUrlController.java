@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -19,7 +20,7 @@ public class GetImageUrlController {
     @Autowired
     private LocalConfig localConfig;
     @PostMapping("/image")
-    public String uploadImage(MultipartFile file){
+    public String uploadImage(@RequestParam(value = "file") MultipartFile file){
         long size = (long) file.getSize();
         if (size > localConfig.getMaxFileSize()) {
             return "上传文件过大，请上传小于100MB大小的文件";
