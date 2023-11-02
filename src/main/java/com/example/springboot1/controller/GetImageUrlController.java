@@ -36,4 +36,19 @@ public class GetImageUrlController {
         String imageUrl = imageInfo.getImageUrl();
         return Result.success(imageUrl);
     }
+
+    public String uploadImageInner(MultipartFile file){
+
+        String imageName = file.getOriginalFilename();
+        QueryWrapper<ImageInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("image_name",imageName);
+        if (getImageUrlServiceImpl.getOne(queryWrapper)!=null){
+            return getImageUrlServiceImpl.getOne(queryWrapper).getImageUrl();
+        }
+
+        ImageInfo imageInfo = getImageUrlServiceImpl.uploadImage(file);
+        getImageUrlServiceImpl.save(imageInfo);
+        String imageUrl = imageInfo.getImageUrl();
+        return imageUrl;
+    }
 }

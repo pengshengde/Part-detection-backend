@@ -11,6 +11,10 @@ public interface GetImageMapper {
     @Insert("Insert INTO sys_Image (image_id, image_base64) values (#{image_id},#{image_base64})")
     boolean saveImage(@Param("image_id") String image_id, @Param("image_base64")String image_base64);
 
+    @Select("select COUNT(*) from sys_Image where image_id = #{image_id}")
+    Integer  getImageCount(@Param("image_id") String image_id);
+
+
     @Update("update sys_Image set defect_type = #{defect_type}, processed_image_url = #{processed_image_url}," +
             "additional_info = #{additional_info}, detect_time = #{detect_time} where image_id = #{image_id}")
     boolean saveImageDetectionResult(@Param("image_id") String image_id,@Param("defect_type") String defect_type,

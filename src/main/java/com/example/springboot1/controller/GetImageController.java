@@ -2,25 +2,29 @@ package com.example.springboot1.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.springboot1.Entity.GetAppSecret;
-import com.example.springboot1.Entity.GetImage;
-import com.example.springboot1.Entity.Image;
-import com.example.springboot1.Entity.ImageResult;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
+import com.example.springboot1.Entity.*;
 import com.example.springboot1.common.Result;
+import com.example.springboot1.config.LocalConfig;
+import com.example.springboot1.service.GetImageUrlService;
 import com.example.springboot1.service.IImageService;
 import com.example.springboot1.service.Impl.GetAppSecretServiceImpl;
 import com.example.springboot1.service.Impl.GetImageServiceImpl;
 import com.example.springboot1.service.Impl.ImageServiceImpl;
+import com.example.springboot1.utils.HttpUtils;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.springboot1.utils.HttpUtils.pythonPost;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -31,7 +35,16 @@ public class GetImageController {
     private GetImageServiceImpl getImageServiceImpl;
 
     @Autowired
+    LocalConfig localConfig;
+
+    @Autowired
+    HttpUtils httpUtils;
+
+    @Autowired
     private GetAppSecretServiceImpl getAppSecretServiceImpl;
+
+    @Autowired
+    private GetImageUrlController getImageUrlController;
 
     @Autowired
 //    @Qualifier("imageServiceImpl")
@@ -59,7 +72,13 @@ public class GetImageController {
         List<ImageResult> getImageResultList = new ArrayList<>();                // imageResult实体类的列表
 
         if (getAppSecretServiceImpl.existsSign(sign)){
-            boolean saveImage = getImageServiceImpl.saveImage(image_id,image_base64);
+            // 检查image_id的图片信息是否存在
+
+            boolean saveImage = true;
+            if (!SqlHelper.retBool(getImageServiceImpl.getImageCount(image_id))){
+                 saveImage = getImageServiceImpl.saveImage(image_id,image_base64);
+            }
+
             if (saveImage){
                 ImageResult imageResult = new ImageResult();
 
@@ -70,10 +89,24 @@ public class GetImageController {
                 // 格式化当前时间
                 String nowTime = currentTime.format(formatter);
 
+                String dectionResult = httpUtils.pythonPost(localConfig.getPythonurl(),image_id,image_base64);   // 将上传的到的图片post到python接口
+                MmdectionResult mmdectionResult = httpUtils.postResultToEntity(dectionResult);                   // 得到python接口返回的检测结果
+                System.out.println(mmdectionResult.toString());
+
+                MultipartFile file = httpUtils.base64ToMultipartFile(image_id,mmdectionResult.getImageResultBase64());   // 将获得的base64转化成file文件
+                String image_url = getImageUrlController.uploadImageInner(file);                                         // 获得检测完图片的Url
+                System.out.println(image_url);
+
+                List<String> defect_type = mmdectionResult.getDetect_type();
+                if (defect_type.size()==0){
+                    imageResult.setDefect_type("正常");
+                }else {
+                    imageResult.setDefect_type(String.join(", ", defect_type));
+                }
+
                 imageResult.setImage_id(image_id);
-                imageResult.setDefect_type("过切");
                 imageResult.setDetect_time(nowTime);
-                imageResult.setProcessed_image_url("https://pic.imgdb.cn/item/6513f2ecc458853aef42061f.jpg");
+                imageResult.setProcessed_image_url(image_url);
                 imageResult.setAdditional_info("1");
 
                 getImageServiceImpl.saveImageDetectionResult(imageResult.getImage_id(),imageResult.getDefect_type(),

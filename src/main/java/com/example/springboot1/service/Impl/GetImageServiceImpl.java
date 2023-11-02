@@ -1,5 +1,6 @@
 package com.example.springboot1.service.Impl;
 
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.example.springboot1.Entity.GetImage;
 import com.example.springboot1.Entity.ImageResult;
 import com.example.springboot1.mapper.GetImageMapper;
@@ -28,6 +29,10 @@ public class GetImageServiceImpl implements GetImageMapper {
         return  getImageMapper.getImageDetectionResult(image_id);
     }
 
+    @Override
+    public Integer getImageCount(String image_id){
+        return getImageMapper.getImageCount(image_id);
+    }
 
 
 }

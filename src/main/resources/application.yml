@@ -35,3 +35,6 @@ serverInfo:
   uploadpath: /home/images
 #  uploadpath: E:\project\IDEA\project\system
 
+python:
+  #python端的接口地址
+  url: http://172.20.138.208:5000/api/mmdetection/predict
