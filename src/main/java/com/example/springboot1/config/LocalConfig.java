@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +51,17 @@ public class LocalConfig {
             System.out.println("Unsupported ContentType");
         }
         return fileExtension;
+    }
+
+    public String GetNowTime(){
+        // 读取当前时间
+        LocalDateTime currentTime = LocalDateTime.now();
+        // 定义日期时间格式
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        // 格式化当前时间
+        String nowTime = currentTime.format(formatter);
+
+        return nowTime;
     }
 
 

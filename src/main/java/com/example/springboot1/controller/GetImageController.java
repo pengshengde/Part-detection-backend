@@ -47,9 +47,6 @@ public class GetImageController {
     private GetImageUrlController getImageUrlController;
 
     @Autowired
-//    @Qualifier("imageServiceImpl")
-//    private IImageService imageService;
-
     private ImageServiceImpl imageServiceImpl;
     private String image_id;
     private String image_base64;
@@ -82,12 +79,7 @@ public class GetImageController {
             if (saveImage){
                 ImageResult imageResult = new ImageResult();
 
-                // 读取当前时间
-                LocalDateTime currentTime = LocalDateTime.now();
-                // 定义日期时间格式
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                // 格式化当前时间
-                String nowTime = currentTime.format(formatter);
+                String nowTime = localConfig.GetNowTime();                                 // 获取当前时间
 
                 String dectionResult = httpUtils.pythonPost(localConfig.getPythonurl(),image_id,image_base64);   // 将上传的到的图片post到python接口
                 MmdectionResult mmdectionResult = httpUtils.postResultToEntity(dectionResult);                   // 得到python接口返回的检测结果

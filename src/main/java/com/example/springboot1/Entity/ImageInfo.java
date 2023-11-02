@@ -8,12 +8,16 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
+
+/**
+ * 将从图床相关的数据存放在数据库的实体类
+ * */
 @Data
 @ToString
 @TableName("sys_image_url")
 public class ImageInfo {
 
-    @TableId()
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @TableField("image_name")

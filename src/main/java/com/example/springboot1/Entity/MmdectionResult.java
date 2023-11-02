@@ -4,6 +4,10 @@ import lombok.Data;
 
 import java.util.List;
 
+
+/**
+ * 从python接口获得数据的实体类，存放图片的检测结果信息
+ * */
 @Data
 public class MmdectionResult {
 

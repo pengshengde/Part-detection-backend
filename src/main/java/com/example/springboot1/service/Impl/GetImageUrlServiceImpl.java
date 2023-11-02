@@ -27,11 +27,11 @@ public class GetImageUrlServiceImpl extends ServiceImpl<ImageUrlMapper,ImageInfo
         String fileNamePrefix = fileName.substring(0, fileName.lastIndexOf("."));
 
         LocalDateTime localDateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedDateTime = formatter.format(localDateTime);
         Integer Year = localDateTime.getYear();
         Integer Month = localDateTime.getMonthValue();
-        long timestamp = System.currentTimeMillis();
+
+        long timestamp = System.currentTimeMillis();                       // 获取当前的时间戳
+        String formattedDateTime = localConfig.GetNowTime();                // 获取当前的时间
 
         String sepa = File.separator;
 
@@ -64,6 +64,7 @@ public class GetImageUrlServiceImpl extends ServiceImpl<ImageUrlMapper,ImageInfo
             return new ImageInfo();
         }
     }
+
 
     public void createDirectory(String directoryPath){
         File targetFile = new File(directoryPath);

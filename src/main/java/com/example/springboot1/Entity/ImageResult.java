@@ -4,6 +4,10 @@ package com.example.springboot1.Entity;
 import lombok.Data;
 import lombok.ToString;
 
+
+/**
+ * 向服务器存放数据的实体类，存放图片的相关信息
+ * */
 @Data
 @ToString
 public class ImageResult {

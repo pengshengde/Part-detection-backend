@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-
+/*
+*  该类用于存放图片信息，用于想前端软件传递信息的实体类
+* */
 @Getter
 @Setter
 @Data

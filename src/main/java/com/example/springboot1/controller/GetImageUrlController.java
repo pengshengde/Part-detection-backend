@@ -44,11 +44,11 @@ public class GetImageUrlController {
         queryWrapper.eq("image_name",imageName);
         if (getImageUrlServiceImpl.getOne(queryWrapper)!=null){
             return getImageUrlServiceImpl.getOne(queryWrapper).getImageUrl();
+        }else {
+            ImageInfo imageInfo = getImageUrlServiceImpl.uploadImage(file);
+            getImageUrlServiceImpl.save(imageInfo);
+            String imageUrl = imageInfo.getImageUrl();
+            return imageUrl;
         }
-
-        ImageInfo imageInfo = getImageUrlServiceImpl.uploadImage(file);
-        getImageUrlServiceImpl.save(imageInfo);
-        String imageUrl = imageInfo.getImageUrl();
-        return imageUrl;
-    }
+        }
 }
