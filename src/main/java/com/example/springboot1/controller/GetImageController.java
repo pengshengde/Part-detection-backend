@@ -89,6 +89,7 @@ public class GetImageController {
                 String image_url = getImageUrlController.uploadImageInner(file);                                         // 获得检测完图片的Url
                 System.out.println(image_url);
 
+
                 List<String> defect_type = mmdectionResult.getDetect_type();
                 if (defect_type.size()==0){
                     imageResult.setDefect_type("正常");
