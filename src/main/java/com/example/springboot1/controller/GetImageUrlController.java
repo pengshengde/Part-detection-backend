@@ -18,7 +18,7 @@ public class GetImageUrlController {
     GetImageUrlServiceImpl getImageUrlServiceImpl;
 
     @Autowired
-    private LocalConfig localConfig;
+    LocalConfig localConfig;
 
     @PostMapping
     public Result uploadImage(MultipartFile file){

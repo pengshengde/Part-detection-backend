@@ -19,7 +19,7 @@ import java.util.UUID;
 public class GetImageUrlServiceImpl extends ServiceImpl<ImageUrlMapper,ImageInfo> implements GetImageUrlService {
 
     @Autowired
-    private LocalConfig localConfig;
+    LocalConfig localConfig;
 
     public ImageInfo uploadImage(MultipartFile file) {
         String fileName = file.getOriginalFilename();
