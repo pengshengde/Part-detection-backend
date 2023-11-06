@@ -73,7 +73,9 @@ public class GetImageController {
 
             boolean saveImage = true;
             if (!SqlHelper.retBool(getImageServiceImpl.getImageCount(image_id))){
-                 saveImage = getImageServiceImpl.saveImage(image_id,image_base64);
+                MultipartFile file = httpUtils.base64ToMultipartFile(image_id, image_base64);
+                String image_original_url = getImageUrlController.uploadImageInner(file,"original");
+                saveImage = getImageServiceImpl.saveImage(image_id, image_original_url);
             }
 
             if (saveImage){
@@ -86,7 +88,7 @@ public class GetImageController {
                 System.out.println(mmdectionResult.toString());
 
                 MultipartFile file = httpUtils.base64ToMultipartFile(image_id,mmdectionResult.getImageResultBase64());   // 将获得的base64转化成file文件
-                String image_url = getImageUrlController.uploadImageInner(file);                                         // 获得检测完图片的Url
+                String image_url = getImageUrlController.uploadImageInner(file,"result");                       // 获得检测完图片的Url,保存在文件夹的/result
                 System.out.println(image_url);
 
 

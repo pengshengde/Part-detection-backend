@@ -35,5 +35,7 @@ public class ImageInfo {
     @TableField("image_create_time")
     private String imageCreateTime;
 
+    @TableField("image_tag")
+    private String imageTag;
 
 }

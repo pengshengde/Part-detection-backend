@@ -20,8 +20,7 @@ import java.util.List;
 @Component
 public class HttpUtils {
 
-    @Autowired
-    static LocalConfig localConfig;
+    public static LocalConfig localConfig = new LocalConfig();
     /**
      * @param url 调用接口
      * @param image_id

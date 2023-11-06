@@ -30,25 +30,28 @@ public class GetImageUrlController {
             return Result.urlIsExist(getImageUrlServiceImpl.getOne(queryWrapper).getImageUrl());
         }
 
+        String nextFilePath = "url";
 
-        ImageInfo imageInfo = getImageUrlServiceImpl.uploadImage(file);
+        ImageInfo imageInfo = getImageUrlServiceImpl.uploadImage(file,nextFilePath);
         getImageUrlServiceImpl.save(imageInfo);
         String imageUrl = imageInfo.getImageUrl();
         return Result.success(imageUrl);
     }
 
-    public String uploadImageInner(MultipartFile file){
+    public String uploadImageInner(MultipartFile file,  String imageTag){
 
         String imageName = file.getOriginalFilename();
         QueryWrapper<ImageInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("image_name",imageName);
+        queryWrapper.eq("image_tag",imageTag);
         if (getImageUrlServiceImpl.getOne(queryWrapper)!=null){
             return getImageUrlServiceImpl.getOne(queryWrapper).getImageUrl();
         }else {
-            ImageInfo imageInfo = getImageUrlServiceImpl.uploadImage(file);
+            ImageInfo imageInfo = getImageUrlServiceImpl.uploadImage(file,imageTag);
             getImageUrlServiceImpl.save(imageInfo);
             String imageUrl = imageInfo.getImageUrl();
             return imageUrl;
         }
-        }
+    }
+
 }

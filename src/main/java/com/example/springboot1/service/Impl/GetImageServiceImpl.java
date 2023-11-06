@@ -3,9 +3,12 @@ package com.example.springboot1.service.Impl;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.example.springboot1.Entity.GetImage;
 import com.example.springboot1.Entity.ImageResult;
+import com.example.springboot1.controller.GetImageUrlController;
 import com.example.springboot1.mapper.GetImageMapper;
+import com.example.springboot1.utils.HttpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class GetImageServiceImpl implements GetImageMapper {
@@ -13,9 +16,16 @@ public class GetImageServiceImpl implements GetImageMapper {
     @Autowired
     private GetImageMapper getImageMapper;
 
+    @Autowired
+    private HttpUtils httpUtils;
+
+    @Autowired
+    GetImageUrlController getImageUrlController;
+
     @Override
-    public boolean saveImage(String image_id, String image_base64) {
-        return getImageMapper.saveImage(image_id, image_base64);
+    public boolean saveImage(String image_id, String image_original_url) {
+
+        return getImageMapper.saveImage(image_id, image_original_url);
     }
 
     @Override

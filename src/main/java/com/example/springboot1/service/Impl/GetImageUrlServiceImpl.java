@@ -21,7 +21,7 @@ public class GetImageUrlServiceImpl extends ServiceImpl<ImageUrlMapper,ImageInfo
     @Autowired
     LocalConfig localConfig;
 
-    public ImageInfo uploadImage(MultipartFile file) {
+    public ImageInfo uploadImage(MultipartFile file, String imageTag) {
         String fileName = file.getOriginalFilename();
         String fileNameSuffix = fileName.substring(fileName.lastIndexOf(".") + 1);
         String fileNamePrefix = fileName.substring(0, fileName.lastIndexOf("."));
@@ -36,7 +36,7 @@ public class GetImageUrlServiceImpl extends ServiceImpl<ImageUrlMapper,ImageInfo
         String sepa = File.separator;
 
         String baseFilePath = localConfig.getUploadFilePath();
-        String filePath = baseFilePath + sepa + Year + sepa + Month;
+        String filePath = baseFilePath + sepa + imageTag + sepa + Year + sepa + Month;
         createDirectory(filePath);
 
         UUID uuid = UUID.randomUUID();
@@ -56,6 +56,7 @@ public class GetImageUrlServiceImpl extends ServiceImpl<ImageUrlMapper,ImageInfo
             imageInfo.setImageUrl(saveUrl);
             imageInfo.setImageCreateTime(formattedDateTime);
             imageInfo.setImageType(fileNameSuffix);
+            imageInfo.setImageTag(imageTag);
 
 
             return imageInfo;
