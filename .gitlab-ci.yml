@@ -5,7 +5,7 @@ stages:
 build-springboot:
   stage: build
   script:
-    - source /home/gitlab-runner/profile
+    - source profile.d
     - mvn clean package
   only:
     - main
@@ -15,7 +15,7 @@ build-springboot:
 deploy-springboot:
   stage: deploy
   script:
-    - source /home/gitlab-runner/profile
+    - source profile.d
     - zsh run.sh 
   only:
     - main
