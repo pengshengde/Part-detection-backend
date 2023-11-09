@@ -5,19 +5,18 @@ stages:
 build-springboot:
   stage: build
   script:
-    - source profile.d
-    - mvn clean package
+    - source java-env.d
   only:
     - main
   tags:
-    - quality
+    - v0.2
 
 deploy-springboot:
   stage: deploy
   script:
-    - source profile.d
+    - source java-env.d
     - zsh run.sh 
   only:
     - main
   tags:
-    - quality
+    - v0.2
