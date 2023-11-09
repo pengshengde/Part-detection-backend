@@ -1,7 +1,6 @@
 package com.example.springboot1.mapper;
 
 import com.example.springboot1.Entity.GetAppSecret;
-import com.example.springboot1.Entity.GetAppSign;
 import com.example.springboot1.Entity.GetSign;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;

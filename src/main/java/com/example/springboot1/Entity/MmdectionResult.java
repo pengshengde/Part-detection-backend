@@ -6,7 +6,7 @@ import java.util.List;
 
 
 /**
- * 从python接口获得数据的实体类，存放图片的检测结果信息
+ * 从python接口获得数据的实体类，存放图片的检测结果信息，包括图片的base64，图片在服务器的保存路径，图片的缺陷类型
  * */
 @Data
 public class MmdectionResult {

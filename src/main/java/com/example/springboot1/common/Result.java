@@ -25,25 +25,31 @@ public class Result {
         return new Result(Constants.CODE_2000, "", data);
     }
 
+    public static Result success(String msg, Object data){
+        return new Result(Constants.CODE_2000, "", data);
+    }
+
 
     public static Result successGetAppSecret(Object data) {return new Result(Constants.CODE_2000, "操作成功! 安全密钥已生成！", data);
     }
-    public static Result successGetImage(Object data) {
+    public static Result successGetData(Object data) {
         return new Result(Constants.CODE_2000, "数据请求已完成！", data);
     }
+
     public static Result successSaveImage(Object data){
         return new Result(Constants.CODE_2000, "图片检测已完成", data);
     }
-    public static Result successDeleteImage(Object data) {
+    public static Result successDelete(Object data) {
         return new Result(Constants.CODE_2004, "数据删除成功！", data);
     }
     public static Result errorSaveImage(){
         return new Result(Constants.CODE_4000, "保存图片失败，请重新上传", null);
     }
-    public static Result errorGetImage(){
+    public static Result errorGetData(){
         return new Result(Constants.CODE_4004, "未查询到该图片的检测结果", null);
     }
-    public static Result errorDeleteImage() {
+
+    public static Result errorDelete() {
         return new Result(Constants.CODE_4000, "数据删除失败，请检查传入参数",null);
     }
     public static Result errorSignTimeOut(){return new Result(Constants.CODE_4002, "访问过期，请重新访问", null);}

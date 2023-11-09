@@ -1,7 +1,6 @@
 package com.example.springboot1.service.Impl;
 
 
-import com.example.springboot1.Entity.GetAppSign;
 import com.example.springboot1.mapper.GetAppSignMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

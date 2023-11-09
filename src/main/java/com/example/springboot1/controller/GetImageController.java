@@ -1,6 +1,8 @@
 package com.example.springboot1.controller;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.example.springboot1.Entity.*;
@@ -11,6 +13,7 @@ import com.example.springboot1.service.IImageService;
 import com.example.springboot1.service.Impl.GetAppSecretServiceImpl;
 import com.example.springboot1.service.Impl.GetImageServiceImpl;
 import com.example.springboot1.service.Impl.ImageServiceImpl;
+import com.example.springboot1.service.Impl.PartServiceImpl;
 import com.example.springboot1.utils.HttpUtils;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,9 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.example.springboot1.utils.HttpUtils.pythonPost;
 
@@ -48,9 +53,9 @@ public class GetImageController {
 
     @Autowired
     private ImageServiceImpl imageServiceImpl;
-    private String image_id;
-    private String image_base64;
-    private String sign;
+
+    @Autowired
+    private PartServiceImpl partServiceImpl;
 
 
     /**
@@ -62,20 +67,20 @@ public class GetImageController {
                            @RequestParam String image_base64*/
                             @RequestBody GetImage getImage){
 
-        sign = getImage.getSign();
-        image_id = getImage.getImage_id();
-        image_base64 = getImage.getImage_base64();
+        String sign = getImage.getSign();
+        String image_id = getImage.getImage_id();
+        String image_base64 = getImage.getImage_base64();
+        String part_id = getImage.getPart_id();
 
         List<ImageResult> getImageResultList = new ArrayList<>();                // imageResult实体类的列表
 
         if (getAppSecretServiceImpl.existsSign(sign)){
-            // 检查image_id的图片信息是否存在
 
             boolean saveImage = true;
-            if (!SqlHelper.retBool(getImageServiceImpl.getImageCount(image_id))){
+            if (!SqlHelper.retBool(getImageServiceImpl.getImageCount(image_id))){    // 检查image_id的信息是否存在
                 MultipartFile file = httpUtils.base64ToMultipartFile(image_id, image_base64);
-                String image_original_url = getImageUrlController.uploadImageInner(file,"original");
-                saveImage = getImageServiceImpl.saveImage(image_id, image_original_url);
+                String original_image_url = getImageUrlController.uploadImageInner(file,"original");
+                saveImage = getImageServiceImpl.saveImage(image_id, part_id, original_image_url);
             }
 
             if (saveImage){
@@ -107,8 +112,39 @@ public class GetImageController {
                 getImageServiceImpl.saveImageDetectionResult(imageResult.getImage_id(),imageResult.getDefect_type(),
                         imageResult.getProcessed_image_url(),imageResult.getAdditional_info(),imageResult.getDetect_time());
 
-
                 getImageResultList.add(imageResult);
+
+
+                QueryWrapper queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("part_id",part_id);
+                // 检查零件信息是否存在
+                if (SqlHelper.retBool(partServiceImpl.count(queryWrapper))){        // 如果存在
+                    Parts existParts = partServiceImpl.getOne(queryWrapper);        // 获取该零件保存的缺陷列表
+                    List<String> existDefectType = existParts.getDefect_type();
+
+                    Set<String> set = new HashSet<>();
+                    set.addAll(defect_type);
+                    set.addAll(existDefectType);
+                    List<String> mergedList = new ArrayList<>(set);                 // 确保合并后的列表中没有重复元素，
+
+                    existParts.setDefect_type(mergedList);                          // 将新的列表保存在数据库中
+                    boolean savePartResult = partServiceImpl.saveOrUpdate(existParts);
+
+                    if (!savePartResult){
+                        return Result.errorSaveImage();                            // 若保存零件失败，返回失败结果
+                    }
+                }else {
+                    Parts newParts = new Parts();                                  // 如果不存在，保存零件信息
+                    newParts.setPart_id(part_id);
+                    newParts.setDefect_type(defect_type);
+                    boolean savePartResult = partServiceImpl.save(newParts);
+
+                    if (!savePartResult){
+                        return Result.errorSaveImage();
+                    }
+                }
+
+
                 return Result.successSaveImage(getImageResultList);
             }else{
                 return Result.errorSaveImage();
@@ -134,6 +170,7 @@ public class GetImageController {
 
         if (getAppSecretServiceImpl.existsSign(sign)){
             QueryWrapper<Image> queryWrapper =new QueryWrapper<>();
+
             if (!"".equals(image_id)) {
                 queryWrapper.like("image_id", image_id);
             }
@@ -151,9 +188,9 @@ public class GetImageController {
             System.out.println(page);
 
             if (!page.getRecords().isEmpty()){
-                return Result.successGetImage(getPage);
+                return Result.successGetData(getPage);
             }else {
-                return Result.errorGetImage();
+                return Result.errorGetData();
             }
 
         }else {
@@ -167,16 +204,16 @@ public class GetImageController {
                              /* @RequestParam String defect_type,
                               @RequestParam String detect_time*/){
 
-        ImageResult imageResult = new ImageResult();
+        ImageResult imageResult;
         List<ImageResult> getImageResult = new ArrayList<>();
 
         if (getAppSecretServiceImpl.existsSign(sign)){
             imageResult = getImageServiceImpl.getImageDetectionResult(image_id);
             if (!imageResult.isEmpty()){
                 getImageResult.add(imageResult);
-                return Result.successGetImage(getImageResult);
+                return Result.successGetData(getImageResult);
             }else {
-                return Result.errorGetImage();
+                return Result.errorGetData();
             }
         }else {
             return Result.errorSignJudge();
@@ -217,9 +254,36 @@ public class GetImageController {
                 Page<Image> page = imageServiceImpl.page(new Page<>(page_number,page_size));
                 getDeleteImageResult.add(page);
 
-                return Result.successDeleteImage(getDeleteImageResult);
+                return Result.successDelete(getDeleteImageResult);
             }else {
-                return Result.errorDeleteImage();
+                return Result.errorDelete();
+            }
+        }else {
+            return Result.errorSignJudge();
+        }
+    }
+
+    @GetMapping("/parts")
+    public Result getPartsImage(@RequestParam String sign,
+                                @RequestParam String part_id,
+                                @RequestParam(defaultValue = "1") Integer page_number,
+                                @RequestParam(defaultValue = "10") Integer page_size){
+
+        if (getAppSecretServiceImpl.existsSign(sign)){
+            QueryWrapper<Image> queryWrapper =new QueryWrapper<>();
+            queryWrapper.eq("part_id", part_id);
+
+            Page<Image> page = imageServiceImpl.page(new Page<>(page_number,page_size),queryWrapper);
+
+            List<Page> getPage = new ArrayList<>();
+            getPage.add(page);
+
+            System.out.println(page);
+
+            if (!page.getRecords().isEmpty()){
+                return Result.successGetData(getPage);
+            }else {
+                return Result.errorGetData();
             }
         }else {
             return Result.errorSignJudge();

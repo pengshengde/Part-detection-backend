@@ -8,8 +8,8 @@ import org.apache.ibatis.annotations.*;
 
 public interface GetImageMapper {
 
-    @Insert("Insert INTO sys_Image (image_id, image_original_url) values (#{image_id},#{image_original_url})")
-    boolean saveImage(@Param("image_id") String image_id, @Param("image_original_url")String image_original_url);
+    @Insert("Insert INTO sys_Image (image_id,part_id, original_image_url) values (#{image_id},#{part_id},#{original_image_url})")
+    boolean saveImage(@Param("image_id") String image_id,@Param("part_id") String part_id, @Param("original_image_url")String original_image_url);
 
     @Select("select COUNT(*) from sys_Image where image_id = #{image_id}")
     Integer  getImageCount(@Param("image_id") String image_id);

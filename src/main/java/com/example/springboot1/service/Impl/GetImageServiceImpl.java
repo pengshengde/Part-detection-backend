@@ -23,9 +23,9 @@ public class GetImageServiceImpl implements GetImageMapper {
     GetImageUrlController getImageUrlController;
 
     @Override
-    public boolean saveImage(String image_id, String image_original_url) {
+    public boolean saveImage(String image_id,String part_id, String original_image_url) {
 
-        return getImageMapper.saveImage(image_id, image_original_url);
+        return getImageMapper.saveImage(image_id, part_id, original_image_url);
     }
 
     @Override
