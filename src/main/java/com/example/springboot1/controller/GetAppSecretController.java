@@ -40,7 +40,7 @@ public class GetAppSecretController{
     })
     @ApiOperation(value = "权限注册",notes = "获取appId，返回appSecret")
     @GetMapping("/appSecret")
-    public Result getSecret(@RequestParam("appId") String appId) throws JsonProcessingException {
+    public Result getSecret(@RequestParam String appId) throws JsonProcessingException {
 
         this.appId = appId;
 

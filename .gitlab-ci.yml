@@ -7,9 +7,9 @@ build-springboot:
   script:
     - source java-env
   only:
-    - main
-  tags:
     - v0.2
+  tags:
+    - quality
 
 deploy-springboot:
   stage: deploy
@@ -18,5 +18,6 @@ deploy-springboot:
     - zsh run.sh 
   only:
     - main
-  tags:
     - v0.2
+  tags:
+    - quality

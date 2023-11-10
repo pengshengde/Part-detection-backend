@@ -48,7 +48,7 @@ public class GetImageUrlServiceImpl extends ServiceImpl<ImageUrlMapper,ImageInfo
         try {
             //将上传文件写到服务器上指定的文件
             file.transferTo(targetFile);
-            String saveUrl =localConfig.getBaseurl()+ Year + "/" + Month + "/" + newFileName;
+            String saveUrl =localConfig.getBaseurl() + imageTag + "/" +  Year + "/" + Month + "/" + newFileName;
 
             ImageInfo imageInfo = new ImageInfo();
             imageInfo.setNewImageName(newFileName);
