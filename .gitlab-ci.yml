@@ -5,7 +5,7 @@ stages:
 build-springboot:
   stage: build
   script:
-    - source java-env.d
+    - source java-env
   only:
     - main
   tags:
@@ -14,7 +14,7 @@ build-springboot:
 deploy-springboot:
   stage: deploy
   script:
-    - source java-env.d
+    - source java-env
     - zsh run.sh 
   only:
     - main
