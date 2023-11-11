@@ -57,20 +57,28 @@ public class GetImageController {
     @Autowired
     private PartServiceImpl partServiceImpl;
 
+    private String image_id;
+    private String image_base64;
+    private String sign;
+    private String part_id;
+
 
     /**
      * getImage输入是一个实体类的形式
      */
     @PostMapping                                 // app上传图片的接口，新增图片信息
-    public Result addOneImage(/*@RequestParam String sign,
-                           @RequestParam String image_id,
-                           @RequestParam String image_base64*/
-                            @RequestBody GetImage getImage){
+    public Result addOneImage(@RequestBody String sign,
+                           @RequestBody String image_id,
+                           @RequestBody String image_base64,
+                           @RequestBody String part_id
+                           /*@RequestBody GetImage getImage*/){
 
-        String sign = getImage.getSign();
-        String image_id = getImage.getImage_id();
-        String image_base64 = getImage.getImage_base64();
-        String part_id = getImage.getPart_id();
+//        String sign = getImage.getSign();
+//        String image_id = getImage.getImage_id();
+//        String image_base64 = getImage.getImage_base64();
+//        String part_id = getImage.getPart_id();
+
+        image_id = part_id + image_id;
 
         List<ImageResult> getImageResultList = new ArrayList<>();                // imageResult实体类的列表
 
@@ -97,6 +105,7 @@ public class GetImageController {
                 System.out.println(image_url);
 
 
+
                 List<String> defect_type = mmdectionResult.getDetect_type();
                 if (defect_type.size()==0){
                     imageResult.setDefect_type("正常");
@@ -106,7 +115,7 @@ public class GetImageController {
 
                 imageResult.setImage_id(image_id);
                 imageResult.setDetect_time(nowTime);
-                imageResult.setProcessed_image_url(image_url);
+                imageResult.setProcessed_image_url("image_url");
                 imageResult.setAdditional_info("1");
 
                 getImageServiceImpl.saveImageDetectionResult(imageResult.getImage_id(),imageResult.getDefect_type(),
