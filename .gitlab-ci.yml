@@ -5,8 +5,9 @@ stages:
 build-springboot:
   stage: build
   script:
-    - source java-env
+    - source java-env.d
   only:
+    - main
     - v0.2
   tags:
     - quality
@@ -14,7 +15,7 @@ build-springboot:
 deploy-springboot:
   stage: deploy
   script:
-    - source java-env
+    - source java-env.d
     - zsh run.sh 
   only:
     - main
