@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.List;
+
 
 /**
  * 向服务器存放数据的实体类，存放图片的相关信息返回给软件
@@ -34,6 +36,7 @@ public class ImageResult {
 
     @TableField("processed_image_url")
     private String processed_image_url;   // 图片检测后url连接
+
 
     public boolean isEmpty(){
         return image_id == null;

@@ -2,10 +2,13 @@ package com.example.springboot1.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.example.springboot1.Entity.Image;
 import com.example.springboot1.Entity.Parts;
+import com.example.springboot1.common.Constants;
 import com.example.springboot1.common.Result;
 import com.example.springboot1.service.Impl.GetAppSecretServiceImpl;
+import com.example.springboot1.service.Impl.ImageServiceImpl;
 import com.example.springboot1.service.Impl.PartServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +18,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/parts")
+@RequestMapping("/api/parts")
 public class GetPartsController {
 
 
@@ -24,6 +27,9 @@ public class GetPartsController {
 
     @Autowired
     GetAppSecretServiceImpl getAppSecretServiceImpl;
+
+    @Autowired
+    ImageServiceImpl imageServiceImpl;
 
     @GetMapping
     public Result findPage(@RequestParam String sign,
@@ -76,8 +82,15 @@ public class GetPartsController {
     @PostMapping
     public Result addPart(@RequestBody Parts parts){
 
-        partServiceImpl.save(parts);
-        return  Result.success("已成功保存零件信息",null);
+        String part_id = parts.getPart_id();
+        QueryWrapper<Parts> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("part_id",part_id);
+        if (!SqlHelper.retBool(partServiceImpl.count(queryWrapper))){
+            partServiceImpl.save(parts);
+            return  Result.success("已成功保存零件信息",null);
+        }else {
+            return Result.error(Constants.CODE_4000,"零件信息已存在");
+        }
     }
 
     @GetMapping("/{part_id}")
@@ -112,10 +125,14 @@ public class GetPartsController {
             queryWrapper.eq("part_id", part_id);
         }
 
-
         if (getAppSecretServiceImpl.existsSign(sign)){
-            boolean delete = partServiceImpl.remove(queryWrapper);
-            if (delete){
+            boolean deletePart = partServiceImpl.remove(queryWrapper);
+
+            QueryWrapper<Image> queryWrapperImage = new QueryWrapper<>();
+            queryWrapperImage.eq("part_id",part_id);
+            boolean deleteImage = imageServiceImpl.remove(queryWrapperImage);          // 若要删掉该零件，则需要删掉该零件的所有图片
+
+            if (deletePart && deleteImage){
                 List<Page> getDeleteImageResult = new ArrayList<>();
                 Page<Parts> page = partServiceImpl.page(new Page<>(page_number,page_size));
                 getDeleteImageResult.add(page);

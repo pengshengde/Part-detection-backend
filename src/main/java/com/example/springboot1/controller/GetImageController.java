@@ -24,10 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static com.example.springboot1.utils.HttpUtils.pythonPost;
 
@@ -67,11 +64,13 @@ public class GetImageController {
      * getImage输入是一个实体类的形式
      */
     @PostMapping                                 // app上传图片的接口，新增图片信息
-    public Result addOneImage(@RequestBody String sign,
-                           @RequestBody String image_id,
-                           @RequestBody String image_base64,
-                           @RequestBody String part_id
+    public Result addOneImage(@RequestBody Map<String, String> request
                            /*@RequestBody GetImage getImage*/){
+
+        String sign = request.get("sign");
+        String image_id = request.get("image_id");
+        String image_base64 = request.get("image_base64");
+        String part_id = request.get("part_id");
 
 //        String sign = getImage.getSign();
 //        String image_id = getImage.getImage_id();
@@ -105,17 +104,18 @@ public class GetImageController {
                 System.out.println(image_url);
 
 
-
                 List<String> defect_type = mmdectionResult.getDetect_type();
+
+
                 if (defect_type.size()==0){
                     imageResult.setDefect_type("正常");
                 }else {
-                    imageResult.setDefect_type(String.join(", ", defect_type));
+                    imageResult.setDefect_type(String.join(", ",defect_type));
                 }
 
                 imageResult.setImage_id(image_id);
                 imageResult.setDetect_time(nowTime);
-                imageResult.setProcessed_image_url("image_url");
+                imageResult.setProcessed_image_url(image_url);
                 imageResult.setAdditional_info("1");
 
                 getImageServiceImpl.saveImageDetectionResult(imageResult.getImage_id(),imageResult.getDefect_type(),
@@ -123,9 +123,9 @@ public class GetImageController {
 
                 getImageResultList.add(imageResult);
 
-
                 QueryWrapper queryWrapper = new QueryWrapper<>();
                 queryWrapper.eq("part_id",part_id);
+
                 // 检查零件信息是否存在
                 if (SqlHelper.retBool(partServiceImpl.count(queryWrapper))){        // 如果存在
                     Parts existParts = partServiceImpl.getOne(queryWrapper);        // 获取该零件保存的缺陷列表
@@ -137,7 +137,10 @@ public class GetImageController {
                     List<String> mergedList = new ArrayList<>(set);                 // 确保合并后的列表中没有重复元素，
 
                     existParts.setDefect_type(mergedList);                          // 将新的列表保存在数据库中
-                    boolean savePartResult = partServiceImpl.saveOrUpdate(existParts);
+                    existParts.setPart_id(part_id);
+
+
+                    boolean savePartResult = partServiceImpl.saveOrUpdate(existParts, queryWrapper);
 
                     if (!savePartResult){
                         return Result.errorSaveImage();                            // 若保存零件失败，返回失败结果
@@ -146,6 +149,7 @@ public class GetImageController {
                     Parts newParts = new Parts();                                  // 如果不存在，保存零件信息
                     newParts.setPart_id(part_id);
                     newParts.setDefect_type(defect_type);
+                    newParts.setDetect_time(nowTime);
                     boolean savePartResult = partServiceImpl.save(newParts);
 
                     if (!savePartResult){
@@ -240,8 +244,9 @@ public class GetImageController {
     @DeleteMapping ("/{image_id}")
     public Result deleteImage(@RequestParam String sign,
                               @PathVariable String image_id,
-                              @RequestParam Integer page_number,
-                              @RequestParam Integer page_size
+                              @RequestParam(defaultValue = "1") Integer page_number,
+                              @RequestParam(defaultValue = "10") Integer page_size,
+                              @RequestParam String part_id
                               /*@RequestParam (defaultValue = "") String defect_type,
                               @RequestParam (defaultValue = "") String detect_time*/){
 
@@ -257,16 +262,52 @@ public class GetImageController {
 //        }
 
         if (getAppSecretServiceImpl.existsSign(sign)){
-            boolean delete = imageServiceImpl.remove(queryWrapper);
-            if (delete){
-                List<Page> getDeleteImageResult = new ArrayList<>();
-                Page<Image> page = imageServiceImpl.page(new Page<>(page_number,page_size));
-                getDeleteImageResult.add(page);
+            // 删除前检查图片的某种缺陷是否删除干净
+            Image image = imageServiceImpl.getOne(queryWrapper);
+            boolean delete = imageServiceImpl.remove(queryWrapper);                             // 删掉该图片的信息
 
-                return Result.successDelete(getDeleteImageResult);
-            }else {
-                return Result.errorDelete();
+            // 下面对删除所有图片的零件进行删除
+            QueryWrapper<Image> queryWrapper1 =new QueryWrapper<>();
+            queryWrapper1.eq("part_id", part_id);                                        // 查询该零件的图片信息
+            if(imageServiceImpl.count(queryWrapper1) == 0){                                     // 若检测到所有图片已经删除，则删除该零件信息
+                partServiceImpl.remove(new QueryWrapper<Parts>().eq("part_id", part_id));
+            } else {                                                                            // 如果删除图片为最后一张，则不需要更新零件缺陷
+                String imageDefectType = image.getDefect_type();                                    // 获取该图片的缺陷
+
+                String[] values =  imageDefectType.split(",");                                // 将该图片存在的缺陷转化为字典
+                for(String value : values){                                                         // 对该字典中存在的缺陷进行遍历
+                    queryWrapper.like("defect_type", value);
+                    if (imageServiceImpl.count(queryWrapper)==0){                                   // 检查剩余缺陷图片中是否存在该缺陷，若不存在则需要更新零件的缺陷信息
+                        QueryWrapper<Parts> queryWrapperPart = new QueryWrapper<Parts>();           // 找到该图片的零件信息
+                        queryWrapperPart.eq("part_id",part_id);
+                        List<String> partDefectType =  partServiceImpl.getOne(queryWrapperPart).getDefect_type();   // 获得该零件的缺陷类型
+                        partDefectType.remove(value);                                                // 去掉上面已删除的图片缺陷类型
+
+                        Integer id = partServiceImpl.getOne(queryWrapperPart).getId();
+
+                        Parts updatePart = new Parts();
+                        updatePart.setId(id);
+                        updatePart.setDefect_type(partDefectType);
+                        updatePart.setPart_id(part_id);
+
+
+                        /*UpdateWrapper<Parts> updateWrapper = new UpdateWrapper<Parts>();             //  更新该零件的缺陷类型
+                        updateWrapper.eq("part_id",part_id);
+                        updateWrapper.set("defect_type",partDefectType);*/
+                        partServiceImpl.saveOrUpdate(updatePart);
+                    }
+                }
             }
+
+
+
+
+            List<Page> getDeleteImageResult = new ArrayList<>();
+
+            Page<Image> page = imageServiceImpl.page(new Page<>(page_number,page_size),queryWrapper1);
+            getDeleteImageResult.add(page);
+
+            return Result.successDelete(getDeleteImageResult);
         }else {
             return Result.errorSignJudge();
         }
@@ -286,8 +327,6 @@ public class GetImageController {
 
             List<Page> getPage = new ArrayList<>();
             getPage.add(page);
-
-            System.out.println(page);
 
             if (!page.getRecords().isEmpty()){
                 return Result.successGetData(getPage);

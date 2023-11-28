@@ -18,7 +18,9 @@ public class Image {
 
     private String image_id;      // 图片编号
 
-    private String part_id;      // 零件编号
+    private String part_id;
+
+    private String processed_image_url;    // 检查结果url
 
     private String defect_type;   // 含有的缺陷类别
 

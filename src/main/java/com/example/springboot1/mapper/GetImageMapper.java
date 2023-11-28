@@ -1,12 +1,15 @@
 package com.example.springboot1.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.springboot1.Entity.GetAppSecret;
 import com.example.springboot1.Entity.GetImage;
 import com.example.springboot1.Entity.Image;
 import com.example.springboot1.Entity.ImageResult;
 import org.apache.ibatis.annotations.*;
 
-public interface GetImageMapper {
+import java.util.List;
+
+public interface GetImageMapper extends BaseMapper<ImageResult> {
 
     @Insert("Insert INTO sys_Image (image_id,part_id, original_image_url) values (#{image_id},#{part_id},#{original_image_url})")
     boolean saveImage(@Param("image_id") String image_id,@Param("part_id") String part_id, @Param("original_image_url")String original_image_url);
