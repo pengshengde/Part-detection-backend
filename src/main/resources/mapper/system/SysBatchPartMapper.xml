@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot1.mapper.SysBatchPartMapper">
+
+    <resultMap id="BatchPartResult" type="com.example.springboot1.entity.browser.quality.SysBatchPart">
+        <result      property="batchId"     column="batch_id"    />
+        <result      property="partId"      column="part_id"     />
+    </resultMap>
+
+    <select id="countBatchPartByBatchId" resultType="Integer">
+        select count(1) from  sys_batch_part where batch_id = #{batchId}
+    </select>
+
+    <select id="selectBatchPartByBatchId" parameterType="Long" resultType="Long">
+        select part_id
+        from sys_batch_part
+        where batch_id = #{batchId}
+    </select>
+
+    <select id="selectBartPartByPartId" parameterType="Long" resultType="Long">
+        select  batch_id
+        from sys_batch_part
+        where part_id = #{partId}
+    </select>
+
+    <select id="selectPartIdsByBatchId" resultType="Long">
+        select part_id from sys_batch_part where batch_id = #{batchId}
+    </select>
+
+
+    <!-- 批量插入 -->
+    <insert id="batchInsertBatchPart">
+        insert into sys_batch_part(batch_id, part_id) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.batchId}, #{item.partId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteBatchPartByBatchId" parameterType="Long">
+        delete from sys_batch_part where batch_id = #{batchId}
+    </delete>
+
+    <delete id="deleteBatchPartByPartId" parameterType="Long">
+        delete from sys_batch_part where part_id = #{partId}
+    </delete>
+
+    <delete id="deleteBatchPart" parameterType="Long">
+        delete from sys_batch_part  where part_id  in
+        <foreach collection="array" item="part_id"  open="(" close=")" separator=",">
+            #{partId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBatchPartInfo" parameterType="com.example.springboot1.entity.browser.quality.SysBatchPart">
+        delete from sys_batch_part where batch_id = #{batchId} and part_id = #{partId}
+    </delete>
+
+    <delete id="deleteBatchPartInfos">
+        delete from sys_batch_part where  batch_id = #{batchId} and part_id in
+        <foreach collection="partIds" item="partId"  open="(" close=")" separator=",">
+            #{partId}
+        </foreach>
+    </delete>
+
+</mapper>

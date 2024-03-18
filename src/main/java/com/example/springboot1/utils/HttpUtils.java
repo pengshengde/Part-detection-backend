@@ -1,18 +1,15 @@
 package com.example.springboot1.utils;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.example.springboot1.Entity.GetImage;
-import com.example.springboot1.Entity.MmdectionResult;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
+import com.example.springboot1.entity.client.MmdectionResult;
 import com.example.springboot1.config.LocalConfig;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -44,7 +41,7 @@ public class HttpUtils {
         return res.bodyText();
     }
 
-    public MmdectionResult postResultToEntity(String bodyText){
+    public static MmdectionResult postResultToEntity(String bodyText){
         JSONObject jsonObject = JSONObject.parseObject(bodyText);
         JSONArray jsonArray = jsonObject.getJSONArray("class_info");
 
@@ -68,7 +65,7 @@ public class HttpUtils {
         return mmdectionResult;
     }
 
-    public static MultipartFile base64ToMultipartFile(String image_id,String base64){
+    public static MultipartFile base64ToMultipartFile(String image_id, String base64){
 
         String contentType;
         byte[] bytes;

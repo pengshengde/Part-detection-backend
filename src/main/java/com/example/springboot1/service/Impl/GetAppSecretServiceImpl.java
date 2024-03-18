@@ -1,6 +1,6 @@
 package com.example.springboot1.service.Impl;
 
-import com.example.springboot1.Entity.GetAppSecret;
+import com.example.springboot1.entity.client.GetAppSecret;
 import com.example.springboot1.mapper.GetAppSecretMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class GetAppSecretServiceImpl implements GetAppSecretMapper{
 
     @Autowired
-    GetAppSecretMapper getAppSecretMapper;
+    private GetAppSecretMapper getAppSecretMapper;
 
     @Override
     public GetAppSecret getSecret(String appId) {

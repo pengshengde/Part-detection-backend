@@ -1,9 +1,7 @@
 package com.example.springboot1.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.springboot1.Entity.ImageResult;
-
-import java.util.List;
+import com.example.springboot1.entity.client.ImageResult;
 
 public interface GetImageService extends IService<ImageResult> {
     boolean saveImage(String image_id, String part_id, String original_image_url);

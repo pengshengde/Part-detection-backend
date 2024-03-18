@@ -1,21 +1,16 @@
 package com.example.springboot1.service.Impl;
 
-import com.example.springboot1.Entity.GetAppSecret;
-import com.example.springboot1.mapper.GetAppSecretMapper;
+import com.example.springboot1.entity.client.GetAppSecret;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 // SpringJUnit支持，由此引入Spring-Test框架支持！

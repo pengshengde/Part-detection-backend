@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot1.mapper.SysBatchMapper">
+
+    <resultMap id="SysBatchResult" type="com.example.springboot1.entity.browser.quality.SysBatch">
+        <id        property="batchId"               column="batch_id"               />
+        <result    property="batchName"             column="batch_name"             />
+        <result    property="partTypeId"            column="part_type_id"           />
+        <result    property="partTypeName"          column="part_type_name"         />
+        <result    property="quantity"              column="quantity"               />
+        <result    property="productionLine"        column="production_line"        />
+        <result    property="devId"                 column="dev_id"                 />
+        <result    property="devName"               column="dev_name"               />
+        <result    property="expectedStartTime"     column="expected_start_time"     />
+        <result    property="expectedEndTime"       column="expected_end_time"       />
+        <result    property="detectStatus"          column="detect_status"           />
+        <result    property="detectStartTime"       column="detect_start_time"       />
+        <result    property="detectEndTime"         column="detect_end_time"         />
+        <result    property="qualifiedQuantity"     column="qualified_quantity"      />
+        <result    property="unqualifiedQuantity"   column="unqualified_quantity"    />
+        <result    property="qualifiedRate"         column="qualified_rate"          />
+        <result    property="createBy"              column="create_by"              />
+        <result    property="createTime"            column="create_time"            />
+        <result    property="remark"                column="remark"                 />
+        <collection property="parts"    javaType="java.util.List"    resultMap="PartsResult" />
+
+    </resultMap>
+
+
+    <resultMap id="PartsResult" type="com.example.springboot1.entity.browser.quality.SysPart">
+        <id     property="partId"         column="part_id"            />
+        <result property="partName"       column="part_name"          />
+        <result property="partTypeId"     column="part_type_id"       />
+        <result property="partTypeName"   column="part_type_name"     />
+        <result property="detectTime"     column="detect_time"        />
+        <result property="detectStatus"   column="detect_status"      />
+        <result property="detectResult"   column="detect_result"      />
+    </resultMap>
+
+    <sql id="selectBatchVo">
+        select b.batch_id, b.batch_name, b.part_type_id, b.quantity, b.production_line, b.dev_id, b.expected_start_time,
+        b.expected_end_time, b.detect_status, b.detect_start_time, b.detect_end_time, b.qualified_quantity, b.unqualified_quantity,
+        b.qualified_rate,  b.create_by, b.create_time, b.remark,
+        pt.part_type_name,
+        e.dev_name,
+        p.part_id, p.part_name, p.part_type_id, p.detect_time,p.detect_status ,p.detect_result
+        from sys_batch b
+            inner join  sys_part_type pt on b.part_type_id = pt.part_type_id
+            inner join sys_equipment e on b.dev_id = e.dev_id
+            left join sys_batch_part bp on b.batch_id = bp.batch_id
+            left join sys_part_data p on p.part_id = bp.part_id
+    </sql>
+
+    <select id="selectBatchUndetectedList" parameterType="com.example.springboot1.entity.browser.quality.SysBatch" resultMap="SysBatchResult">
+        select b.batch_id, b.batch_name, b.part_type_id, b.quantity, b.production_line, b.dev_id, b.expected_start_time, b.expected_end_time,
+               pt.part_type_name,b.create_by, b.create_time, b.remark,
+               e.dev_name
+        from sys_batch b
+            inner join sys_part_type pt on b.part_type_id = pt.part_type_id
+            inner join sys_equipment e on b.dev_id = e.dev_id
+        where b.detect_status = '0' and b.del_flag = '0'
+        <if test="batchId != null and batchId != 0">
+            AND b.batch_id = #{batchId}
+        </if>
+        <if test="batchName != null and batchName != ''">
+            AND b.batch_name like concat('%', #{batchName}, '%')
+        </if>
+        <if test="partTypeId != null and partTypeId != 0">
+            AND b.part_type_id = #{partTypeId}
+        </if>
+        <if test="partTypeName != null and partTypeName != ''">
+            AND pt.part_type_name LIKE CONCAT('%', #{partTypeName}, '%')
+        </if>
+        <if test="quantity != null and quantity != 0">
+            AND b.quantity = #{quantity}
+        </if>
+        <if test="productionLine != null and productionLine != ''">
+            AND b.production_line like concat('%', #{productionLine}, '%')
+        </if>
+        <if test="devId != null and devId != 0">
+            AND b.dev_id = #{devId}
+        </if>
+        <if test="devName != null and devName != ''">
+            AND e.dev_name LIKE CONCAT('%', #{devName}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 设备开始时间检索 -->
+            AND date_format(b.expected_start_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 设备结束时间检索 -->
+            AND date_format(b.expected_start_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+    </select>
+
+    <select id="selectBatchDetectedList" parameterType="com.example.springboot1.entity.browser.quality.SysBatch" resultMap="SysBatchResult">
+        select b.batch_id, b.batch_name, b.part_type_id, b.quantity, b.dev_id, b.detect_start_time, b.detect_end_time, b.qualified_quantity,
+               b.unqualified_quantity,b.qualified_rate, b.create_by, b.create_time, b.remark,b.expected_start_time, b.expected_end_time, b.production_line,
+               pt.part_type_name,
+               e.dev_name
+        from sys_batch b
+            inner join  sys_part_type pt on b.part_type_id = pt.part_type_id
+            inner join sys_equipment e on b.dev_id = e.dev_id
+        where b.detect_status = '1' and b.del_flag = '0'
+        <if test="batchId != null and batchId != 0">
+            AND b.batch_id = #{batchId}
+        </if>
+        <if test="batchName != null and batchName != ''">
+            AND b.batch_name like concat('%', #{batchName}, '%')
+        </if>
+        <if test="partTypeId != null and partTypeId != 0">
+            AND b.part_type_id = #{partTypeId}
+        </if>
+        <if test="partTypeName != null and partTypeName != ''">
+            AND pt.part_type_name LIKE CONCAT('%', #{partTypeName}, '%')
+        </if>
+        <if test="quantity != null and quantity != 0">
+            AND b.quantity = #{quantity}
+        </if>
+        <if test="qualifiedRate != null and qualifiedRate != 0">
+            AND b.qualified_rate >= #{qualifiedRate}
+        </if>
+        <if test="devId != null and devId != 0">
+            AND b.dev_id = #{devId}
+        </if>
+        <if test="devName != null and devName != ''">
+            AND e.dev_name LIKE CONCAT('%', #{devName}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 设备开始时间检索 -->
+            AND date_format(b.detect_start_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 设备结束时间检索 -->
+            AND date_format(b.detect_start_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+    </select>
+
+    <insert id="insertBatch"  parameterType="com.example.springboot1.entity.browser.quality.SysBatch" useGeneratedKeys="true" keyProperty="batchId">
+        insert into sys_batch(
+            <if test="batchId != null and batchId != 0">batch_id,</if>
+            <if test="batchName != null and batchName != ''">batch_name,</if>
+            <if test="partTypeId != null and partTypeId != 0">part_type_id,</if>
+            <if test="quantity != null and quantity != 0">quantity,</if>
+            <if test="productionLine != null and productionLine != ''">production_line,</if>
+            <if test="devId != null and devId != 0">dev_id,</if>
+            <if test="expectedStartTime != null and expectedStartTime != ''">expected_start_time,</if>
+            <if test="expectedEndTime != null and expectedEndTime != ''">expected_end_time,</if>
+            <if test="detectStatus != null and detectStatus != ''">detect_status,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+        create_time
+        )values (
+            <if test="batchId != null and batchId != 0">#{batchId},</if>
+            <if test="batchName != null and batchName != ''">#{batchName},</if>
+            <if test="partTypeId != null and partTypeId != 0">#{partTypeId},</if>
+            <if test="quantity != null and quantity != 0">#{quantity},</if>
+            <if test="productionLine != null and productionLine != ''">#{productionLine},</if>
+            <if test="devId != null and devId != 0">#{devId},</if>
+            <if test="expectedStartTime != null and expectedStartTime != ''">#{expectedStartTime},</if>
+            <if test="expectedEndTime != null and expectedEndTime != ''">#{expectedEndTime},</if>
+            <if test="detectStatus != null and detectStatus != ''">#{detectStatus},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            sysdate()
+        )
+    </insert>
+
+    <select id="selectBatchById" parameterType="Long" resultMap="SysBatchResult">
+        <include refid="selectBatchVo"/>
+        where b.batch_id = #{batchId} and b.del_flag = '0'
+    </select>
+
+    <select id="checkBatchNameUnique" parameterType="String" resultMap="SysBatchResult">
+        select batch_id , batch_name from sys_batch where batch_name = #{batchName} limit 1
+    </select>
+
+    <update id="updateBatch" parameterType="com.example.springboot1.entity.browser.quality.SysBatch">
+        update sys_batch
+        <set>
+            <if test="batchName != null and batchName != ''">batch_name = #{batchName},</if>
+            <if test="partTypeId != null and partTypeId != 0">part_type_id = #{partTypeId},</if>
+            <if test="productionLine != null and productionLine != ''">production_line = #{productionLine},</if>
+            <if test="devId != null and devId != 0">dev_id = #{devId},</if>
+            <if test="expectedStartTime != null and expectedStartTime != ''">expected_start_time = #{expectedStartTime},</if>
+            <if test="expectedEndTime != null and expectedEndTime != ''">expected_end_time = #{expectedEndTime},</if>
+            <if test="detectStatus != null and detectStatus != ''">detect_status = #{detectStatus},</if>
+            <if test="detectStartTime != null and detectStartTime != ''">detect_start_time = #{detectStartTime},</if>
+            <if test="detectEndTime != null and detectEndTime != ''">detect_end_time = #{detectEndTime},</if>
+            <if test="quantity != null ">quantity = #{quantity},</if>
+            <if test="qualifiedQuantity != null ">qualified_quantity = #{qualifiedQuantity},</if>
+            <if test="unqualifiedQuantity != null ">unqualified_quantity = #{unqualifiedQuantity},</if>
+            <if test="qualifiedRate != null and qualifiedRate != ''">qualified_rate = #{qualifiedRate},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where batch_id = #{batchId}
+    </update>
+
+    <delete id="deleteBatchById" parameterType="Long">
+        update sys_batch set del_flag = '2' where batch_id = #{batchId} where batch_id = #{batchId}
+    </delete>
+
+    <delete id="deleteBatchByIds" parameterType="Long">
+        update sys_batch set del_flag = '2' where batch_id in
+        <foreach collection="array" item="batchId" open="(" separator="," close=")">
+            #{batchId}
+        </foreach>
+    </delete>
+
+
+
+</mapper>

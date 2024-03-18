@@ -53,7 +53,7 @@ public class LocalConfig {
         return fileExtension;
     }
 
-    public String GetNowTime(){
+    public  String GetNowTime(){
         // 读取当前时间
         LocalDateTime currentTime = LocalDateTime.now();
         // 定义日期时间格式

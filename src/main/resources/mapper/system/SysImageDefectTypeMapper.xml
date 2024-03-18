@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot1.mapper.SysImageDefectTypeMapper">
+
+    <resultMap id="ImageDefectType" type="com.example.springboot1.entity.browser.quality.SysImageDefectType">
+        <result      property="imageId"         column="image_id"           />
+        <result      property="defectTypeId"    column="defect_type_id"     />
+    </resultMap>
+
+    <!-- 通用查询映射结果 -->
+    <select id="countImageDefectTypeByImageId" resultType="Integer">
+        select count(1)
+        from sys_image_defect_type
+        where image_id=#{imageId} and defect_type_id != 1
+    </select>
+
+    <select id="countImageDefectType" parameterType="com.example.springboot1.entity.browser.quality.SysImageDefectType" resultType="Integer">
+        select count(1)
+        from sys_image_defect_type
+        where image_id = #{imageId}
+        <if test="defectTypeId != null and defectTypeId != 0">
+            AND defect_type_id = #{defectTypeId}
+        </if>
+    </select>
+
+
+    <!-- 批量插入 -->
+    <insert id="batchInsertImageDefectType">
+        insert into
+            sys_image_defect_type(image_id,defect_type_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.imageId}, #{item.defectTypeId})
+        </foreach>
+    </insert>
+
+    <insert id="insertImageDefectType" parameterType="com.example.springboot1.entity.browser.quality.SysImageDefectType" >
+        insert into sys_image_defect_type(image_id,defect_type_id)
+        values (#{imageId}, #{defectTypeId})
+    </insert>
+
+    <delete id="deleteImageDefectTypeByImageId" parameterType="Long">
+        delete from sys_image_defect_type where  image_id = #{imageId}
+    </delete>
+
+    <select id="selectDefectTypeByImageId" parameterType="Long" resultType="Long">
+        select defect_type_id from sys_image_defect_type where image_id = #{imageId}
+    </select>
+
+    <delete id="deleteImageDefectTypeByDefectTypeId" parameterType="Long">
+        delete from sys_image_defect_type where  defect_type_id = #{defectTypeId}
+    </delete>
+
+    <delete id="deleteImageDefectTypeByDefectTypeIds" parameterType="Long">
+        delete from sys_image_defect_type
+        where defect_type_id in
+        <foreach collection="array" item="defectTypeId" open="(" separator="," close=")">
+            #{defectTypeId}
+        </foreach>
+    </delete>
+
+</mapper>

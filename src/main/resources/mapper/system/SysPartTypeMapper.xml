@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot1.mapper.SysPartTypeMapper">
+
+    <!-- 通用查询映射结果 -->    
+    <resultMap id="SysPartTypeResult" type="com.example.springboot1.entity.browser.quality.SysPartType">
+        <id        property="partTypeId"            column="part_type_id"        />
+        <result    property="partTypeName"          column="part_type_name"      />
+        <result    property="createBy"              column="create_by"           />
+        <result    property="createTime"            column="create_time"         />
+        <result    property="remark"                column="remark"              />
+    </resultMap>
+
+
+    <select id="selectPartTypeList" parameterType="com.example.springboot1.entity.browser.quality.SysPartType" resultMap="SysPartTypeResult">
+        select pt.part_type_id, pt.part_type_name, pt.create_by, pt.create_time, pt.remark
+        from sys_part_type pt
+        where 1=1
+        <if test="partTypeName != null and partTypeName != ''">
+            AND pt.part_type_name like concat('%', #{partTypeName}, '%')
+        </if>
+        <if test="partTypeId != null and partTypeId != 0">
+            AND pt.part_type_id = #{partTypeId}
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 设备开始时间检索 -->
+            AND date_format(pt.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 设备结束时间检索 -->
+            AND date_format(pt.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+    </select>
+
+    <select id="selectPartTypeIdByName" parameterType="String"  resultType="Long">
+        select pt.part_type_id
+        from sys_part_type pt
+        where pt.part_type_name = #{partTypeName}
+    </select>
+</mapper>

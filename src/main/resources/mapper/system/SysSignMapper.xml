@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot1.mapper.SysSignMapper">
+
+    <resultMap id="SignResult" type="com.example.springboot1.entity.browser.quality.SysSign">
+        <id        property="signId"            column="sign_id"            />
+        <result    property="devId"             column="dev_id"             />
+        <result    property="devName"           column="dev_name"           />
+        <result    property="appId"             column="app_id"             />
+        <result    property="appSecret"         column="app_secret"         />
+        <result    property="sign"              column="sign"               />
+        <result    property="signUsageCount"        column="sign_usage_count"        />
+        <result    property="signExpireTime"        column="sign_expire_time"        />
+        <result    property="appIdLastUsedTime"      column="app_id_last_used_time"     />
+        <result    property="ipaddr"            column="ipaddr"             />
+        <result    property="loginLocation"     column="login_location"     />
+        <result    property="createBy"          column="create_by"    />
+        <result    property="createTime"        column="create_time"  />
+        <result    property="updateBy"          column="update_by"    />
+        <result    property="updateTime"        column="update_time"  />
+        <result    property="remark"            column="remark"       />
+    </resultMap>
+
+    <sql id="selectSignVo">
+        select s.sign_id, s.dev_id, s.app_id, s.app_secret, s.sign, s.sign_usage_count, s.sign_expire_time,  s.ipaddr, s.login_location, s.create_by,
+               s.create_time, s.remark, e.dev_name
+        from sys_sign s
+            left join sys_equipment e on s.dev_id = e.dev_id
+    </sql>
+
+    <select id="selectSignList" parameterType="com.example.springboot1.entity.browser.quality.SysSign" resultMap="SignResult">
+        select s.sign_id, s.app_id, s.app_secret, s.sign, s.sign_usage_count, s.sign_expire_time,  s.ipaddr, s.login_location, s.remark, e.dev_name , s.create_time
+        from sys_sign s
+            left join sys_equipment  e on s.dev_id = e.dev_id
+        where s.del_flag = '0'
+        <if test="signId != null and signId != 0">
+            and s.sign_id = #{signId}
+        </if>
+        <if test="devId != null and devId != 0">
+            AND s.dev_id = #{devId}
+        </if>
+        <if test="devName != null and devName != ''">
+            AND e.dev_name LIKE CONCAT('%', #{devName}, '%')
+        </if>
+        <if test="appId != null and appId != ''">
+            AND s.app_id like concat('%', #{appId}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            AND date_format(u.sign_expire_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            AND date_format(u.sign_expire_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+        <if test="ipaddr != null and ipaddr != ''">
+            AND s.ipaddr like concat('%', #{ipaddr}, '%')
+        </if>
+        <if test="loginLocation != null and loginLocation != ''">
+            AND s.login_location like concat('%', #{loginLocation}, '%')
+        </if>
+    </select>
+
+    <insert id="insertAppId" parameterType="com.example.springboot1.entity.browser.quality.SysSign" useGeneratedKeys="true" keyProperty="signId">
+        insert into sys_sign(
+            <if test="signId != null and  signId != 0">sign_id,</if>
+            <if test="devId != null and  devId != 0 ">dev_id,</if>
+            <if test="appId != null and  appId != ''">app_id,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            create_time
+        ) values (
+            <if test="signId != null and  signId != 0">#{signId},</if>
+            <if test="devId != null and  devId != 0">#{devId},</if>
+            <if test="appId != null and  appId != ''">#{appId},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            sysdate()
+        )
+    </insert>
+
+
+    <select id="checkAppIdUnique" parameterType="String" resultMap="SignResult">
+        select sign_id, app_id from sys_sign where app_id = #{appId} limit 1
+    </select>
+
+    <select id="checkAppIdExists" parameterType="com.example.springboot1.entity.browser.quality.SysSign" resultType="Integer">
+        select count(1)
+        from sys_sign
+        where app_id = #{appId} and del_flag = '0'
+        <if test="devId != null and  devId != 0 ">
+            AND  dev_id = #{devId}
+        </if>
+    </select>
+
+    <update id="updateAppId" parameterType="com.example.springboot1.entity.browser.quality.SysSign">
+        update sys_sign
+        <set>
+            <if test="appId != null and appId != ''">app_id = #{appId},</if>
+            <if test="devId != null and devId != 0 ">dev_id = #{devId},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where sign_id = #{signId}
+    </update>
+
+
+    <update id="updateAppSecret" parameterType="com.example.springboot1.entity.browser.quality.SysSign" >
+        update sys_sign
+        <set>
+            <if test="appSecret != null and appSecret != ''">app_secret = #{appSecret},</if>
+            <if test="ipaddr != null and ipaddr != ''">ipaddr = #{ipaddr},</if>
+            <if test="loginLocation != null and loginLocation != ''">login_location = #{loginLocation},</if>
+            app_id_last_used_time = sysdate(),
+            sign_usage_count = 0,
+            sign_expire_time = Null,
+        </set>
+        where app_id = #{appId}
+    </update>
+
+    <select id="selectAppIdById" parameterType="Long" resultMap="SignResult">
+        <include refid="selectSignVo"/>
+        where sign_id = #{signId}
+    </select>
+
+    <select id="selectAppIdLastUsedTime" parameterType="com.example.springboot1.entity.browser.quality.SysSign" resultType="Long">
+        SELECT UNIX_TIMESTAMP(app_id_last_used_time) AS timestamp
+        from sys_sign
+        where  app_id = #{appId}
+        <if test="devId != null and  devId != 0 ">
+            AND  dev_id = #{devId}
+        </if>
+    </select>
+
+    <select id="selectAppSecret" parameterType="com.example.springboot1.entity.browser.quality.SysSign" resultType="String">
+        SELECT app_secret
+        from   sys_sign
+        where  app_id = #{appId}
+        <if test="devId != null and  devId != 0 ">
+            AND  dev_id = #{devId}
+        </if>
+    </select>
+
+    <select id="selectSignExpireTime" parameterType="com.example.springboot1.entity.browser.quality.SysSign" resultType="Long">
+        SELECT UNIX_TIMESTAMP(sign_expire_time) AS timestamp
+        from sys_sign
+        where sign = #{sign}
+        <if test="devId != null and  devId != 0">
+            AND dev_id = #{devId}
+        </if>
+    </select>
+
+    <select id="selectSign" parameterType="com.example.springboot1.entity.browser.quality.SysSign" resultType="Integer">
+        select count(1)
+        from sys_sign
+        where sign = #{sign}
+        <if test="devId != null and  devId != 0">
+            AND dev_id = #{devId}
+        </if>
+    </select>
+
+    <update id="updateSignRecord" parameterType="com.example.springboot1.entity.browser.quality.SysSign">
+        update sys_sign
+        <set>
+            <if test="ipaddr != null and ipaddr != ''">ipaddr = #{ipaddr},</if>
+            <if test="loginLocation != null and loginLocation != ''">login_location = #{loginLocation},</if>
+            sign_usage_count = sign_usage_count + 1,
+        </set>
+        where sign = #{sign}
+        <if test="devId != null and  devId != 0">
+            AND dev_id = #{devId}
+        </if>
+    </update>
+
+    <update id="updateSign" parameterType="com.example.springboot1.entity.browser.quality.SysSign">
+        update sys_sign
+        <set>
+            <if test="sign != null and sign != ''">sign = #{sign},</if>
+            <if test="ipaddr != null and ipaddr != ''">ipaddr = #{ipaddr},</if>
+            <if test="loginLocation != null and loginLocation != ''">login_location = #{loginLocation},</if>
+            sign_usage_count = sign_usage_count + 1,
+            sign_expire_time = DATE_ADD(NOW(), INTERVAL 1 DAY),
+            app_id_last_used_time = sysdate(),
+        </set>
+        where app_id = #{appId}
+    </update>
+
+    <delete id="deleteSignById" parameterType="Long">
+        update sys_sign set del_flag = '2' where sign_id = #{signId}
+    </delete>
+
+    <delete id="deleteSignByIds" parameterType="Long">
+        update sys_sign set del_flag = '2' where sign_id in
+        <foreach collection="array" item="signId" open="(" separator="," close=")">
+            #{signId}
+        </foreach>
+    </delete>
+
+</mapper>

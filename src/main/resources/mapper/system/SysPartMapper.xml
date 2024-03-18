@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot1.mapper.SysPartMapper">
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="PartResult" type="com.example.springboot1.entity.browser.quality.SysPart">
+        <id     property="partId"           column="part_id"            />
+        <result property="partName"         column="part_name"          />
+        <result property="partTypeId"       column="part_type_id"       />
+        <result property="partTypeName"     column="part_type_name"     />
+        <result property="detectTime"       column="detect_time"        />
+        <result property="detectResult"     column="detect_result"      />
+        <result property="detectStatus"     column="detect_status"      />
+        <result property="devName"          column="dev_name"              />
+        <result property="delFlag"          column="del_flag"           />
+        <result property="createBy"         column="create_by"          />
+        <result property="createTime"       column="create_time"        />
+        <result property="updateBy"         column="update_by"          />
+        <result property="updateTime"       column="update_time"        />
+        <result property="remark"           column="remark"             />
+        <result property="defectTypeName"   column="defect_type_name"    />
+        <collection property="images"    javaType="java.util.List"    resultMap="ImagesResult" />
+        <collection property="defectTypes" javaType="java.util.List"    resultMap="defectTypeResult"/>
+    </resultMap>
+
+    <resultMap id="ImagesResult" type="com.example.springboot1.entity.browser.quality.SysImage">
+        <id     property="imageId"          column="image_id"           />
+        <result property="imageName"        column="image_name"         />
+        <result property="imageType"        column="image_type"         />
+        <result property="partTypeId"       column="part_type_id"       />
+        <result property="detectTime"       column="detect_time"        />
+        <result property="detectStatus"     column="detect_status"      />
+        <result property="originalImageUrl" column="original_image_url" />
+        <result property="resultImageUrl"   column="result_image_url"   />
+    </resultMap>
+
+    <resultMap id="defectTypeResult" type="com.example.springboot1.entity.browser.quality.SysDefectType">
+        <id     property="defectTypeId"      column="defect_type_id"       />
+        <result property="defectTypeName"    column="defect_type_name"     />
+        <result property="defectDescription"    column="defect_description"     />
+    </resultMap>
+
+
+
+    <sql id="selectPartVo">
+        select p.part_id, p.part_name, p.part_type_id,  p.detect_time,p.detect_result,p.detect_status , p.del_flag,
+               p.create_by, p.create_time, p.remark,
+               pt.part_type_name,
+               i.image_id, i.image_name, i.image_type, i.part_type_id, i.detect_time,i.detect_status, i.original_image_url, i.result_image_url,
+               dt.defect_type_id, dt.defect_type_name, dt.defect_description
+        from sys_part_data p
+            inner join sys_part_type pt on p.part_type_id = pt.part_type_id
+            left join sys_part_image pi on p.part_id = pi.part_id
+            left join sys_image i on i.image_id = pi.image_id
+            left join sys_part_defect_type pdt on p.part_id = pdt.part_id
+            left join sys_defect_type dt on dt.defect_type_id = pdt.defect_type_id
+    </sql>
+
+    <select id="selectPartList" parameterType="com.example.springboot1.entity.browser.quality.SysPart" resultMap="PartResult">
+        select p.part_id, p.part_name, p.part_type_id,  p.detect_time,p.detect_result,p.detect_status ,p.create_by, p.create_time, p.remark,
+               pt.part_type_name,
+               i.image_id, i.image_name, i.image_type, i.part_type_id, i.detect_time,i.detect_status, i.original_image_url, i.result_image_url,
+               dt.defect_type_id, dt.defect_type_name, dt.defect_description
+        from sys_part_data p
+            inner join sys_part_type pt on p.part_type_id = pt.part_type_id
+            left join sys_part_image pi on p.part_id = pi.part_id
+            left join sys_image i on i.image_id = pi.image_id
+            left join sys_part_defect_type pdt on p.part_id = pdt.part_id
+            left join sys_defect_type dt on dt.defect_type_id = pdt.defect_type_id
+        where p.del_flag = '0' and p.detect_status = '1'
+        <if test="partId != null and partId != 0 ">
+            AND p.part_id = #{partId}
+        </if>
+        <if test="partName != null and partName != ''">
+            AND p.part_name like concat('%', #{partName}, '%')
+        </if>
+        <if test="partTypeId != null and partTypeId != 0">
+            AND p.part_type_id = #{partTypeId}
+        </if>
+        <if test="partTypeName != null and partTypeName != ''">
+            AND pt.part_type_name LIKE CONCAT('%', #{partTypeName}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 设备开始时间检索 -->
+            AND date_format(p.detect_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 设备结束时间检索 -->
+            AND date_format(p.detect_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+        <if test="detectResult != null and detectResult != ''">
+            AND p.detect_result = #{detectResult}
+        </if>
+        <if test="defectTypeName != null and defectTypeName != ''">
+            AND dt.defect_description LIKE CONCAT('%', #{defectTypeName}, '%')
+        </if>
+    </select>
+
+    <select id="selectPartList1" parameterType="com.example.springboot1.entity.browser.quality.SysPart" resultMap="PartResult">
+        select DISTINCT p.part_id, p.part_name, p.part_type_id, p.detect_time,p.detect_result,p.detect_status ,p.create_by, p.create_time, p.remark,
+        pt.part_type_name,e.dev_name,
+        GROUP_CONCAT(dt.defect_description) AS defect_type_name
+        from sys_part_data p
+        inner join sys_part_type pt on p.part_type_id = pt.part_type_id
+        left join sys_part_defect_type pdt on p.part_id = pdt.part_id
+        left join sys_defect_type dt on dt.defect_type_id = pdt.defect_type_id
+        inner join sys_equipment e on p.dev_id = e.dev_id
+        where p.del_flag = '0' and p.detect_status = '1'
+        <if test="partId != null and partId != 0 ">
+            AND p.part_id = #{partId}
+        </if>
+        <if test="partName != null and partName != ''">
+            AND p.part_name like concat('%', #{partName}, '%')
+        </if>
+        <if test="partTypeId != null and partTypeId != 0">
+            AND p.part_type_id = #{partTypeId}
+        </if>
+        <if test="partTypeName != null and partTypeName != ''">
+            AND pt.part_type_name LIKE CONCAT('%', #{partTypeName}, '%')
+        </if>
+        <if test="devName != null and devName != ''">
+            AND e.dev_name LIKE CONCAT('%', #{devName}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 设备开始时间检索 -->
+            AND date_format(p.detect_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 设备结束时间检索 -->
+            AND date_format(p.detect_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+        <if test="detectResult != null and detectResult != ''">
+            AND p.detect_result = #{detectResult}
+        </if>
+        <if test="defectTypeName != null and defectTypeName != ''">
+            AND dt.defect_description LIKE CONCAT('%', #{defectTypeName}, '%')
+        </if>
+        GROUP BY  p.part_id
+    </select>
+
+
+    <insert id="insertPart" parameterType="com.example.springboot1.entity.browser.quality.SysPart" useGeneratedKeys="true" keyProperty="partId">
+        insert into sys_part_data(
+            <if test="partId != null and partId != 0">part_id,</if>
+            <if test="partName != null and partName != ''">part_name,</if>
+            <if test="partTypeId != null and partTypeId != 0">part_type_id,</if>
+            <if test="detectStatus != null and detectStatus != ''">detect_status,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            create_time
+        ) values (
+            <if test="partId != null and partId != 0">#{partId},</if>
+            <if test="partName != null and partName != ''">#{partName},</if>
+            <if test="partTypeId != null and partTypeId != 0">#{partTypeId},</if>
+            <if test="detectStatus != null and detectStatus != ''">#{detectStatus},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            sysdate()
+        )
+    </insert>
+
+    <select id="checkPartNameUnique" parameterType="String" resultMap="PartResult">
+        select part_id, part_name from sys_part_data where part_name = #{partName} limit 1
+    </select>
+
+    <select id="selectPartIdByName" parameterType="String"  resultType="Long">
+        select pd.part_id
+        from sys_part_data pd
+        where pd.part_name = #{partName}  limit 1
+    </select>
+
+    <select id="selectPartIdsByBatchName" parameterType="String" resultType="Long">
+        SELECT pd.part_id
+        FROM sys_part_data pd
+        WHERE pd.part_name like concat('%', #{batchName}, '%')
+    </select>
+
+    <select id="selectPartByPartId" parameterType="Long" resultMap="PartResult">
+        <include refid="selectPartVo"/>
+        where p.part_id = #{partId}
+    </select>
+
+
+    <delete id="deletePartByPartId" parameterType="Long">
+        update sys_part_data set  del_flag = '2' where part_id = #{partId}
+    </delete>
+    
+    <update id="updatePart" parameterType="com.example.springboot1.entity.browser.quality.SysPart">
+        update  sys_part_data
+        <set>
+            <if test="partTypeId != null and partTypeId != 0">part_type_id = #{partTypeId},</if>
+            <if test="partName != null and partName != ''">part_name = #{partName},</if>
+            <if test="detectTime != null and detectTime != ''">detect_time = #{detectTime},</if>
+            <if test="detectStatus != null and detectStatus != ''">detect_status = #{detectStatus},</if>
+            <if test="detectResult != null and detectResult != ''">detect_result = #{detectResult},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where part_id = #{partId}
+    </update>
+
+    <select id="selectAllocatedPartList" parameterType="com.example.springboot1.entity.browser.quality.SysPart" resultMap="PartResult">
+        SELECT DISTINCT p.part_id, p.part_name, p.part_type_id, p.detect_time, p.detect_status, p.detect_result,
+        pt.part_type_name
+        FROM sys_part_data p
+        INNER JOIN sys_part_type pt ON p.part_type_id = pt.part_type_id
+        LEFT JOIN sys_batch_part bp ON p.part_id = bp.part_id
+        LEFT JOIN sys_batch b ON b.batch_id = bp.batch_id
+        WHERE p.del_flag = '0' AND b.batch_id = #{batchId}
+        <if test="partName != null and partName != ''">
+            AND p.part_name LIKE CONCAT('%', #{partName}, '%')
+        </if>
+        <if test="partTypeId != null and partTypeId != 0">
+            AND p.part_type_id = #{partTypeId}
+        </if>
+        <if test="partTypeName != null and partTypeName != ''">
+            AND pt.part_type_name LIKE CONCAT('%', #{partTypeName}, '%')
+        </if>
+        <if test="detectResult != null and detectResult != ''">
+            AND p.detect_result = #{detectResult}
+        </if>
+    </select>
+
+    <select id="selectUnallocatedPartList" parameterType="com.example.springboot1.entity.browser.quality.SysPart" resultMap="PartResult">
+        SELECT DISTINCT p.part_id, p.part_name, p.part_type_id, p.detect_time, p.detect_status, p.detect_result,
+        pt.part_type_name
+        FROM sys_part_data p
+        INNER JOIN sys_part_type pt ON p.part_type_id = pt.part_type_id
+        LEFT JOIN sys_batch_part bp ON p.part_id = bp.part_id
+        LEFT JOIN sys_batch b ON b.batch_id = bp.batch_id
+        WHERE p.del_flag = '0' AND (b.batch_id != #{batchId} OR b.batch_id IS NULL) and p.detect_status = '1'
+        and p.part_id not in (select p.part_id from  sys_part_data p inner join sys_batch_part bp on p.part_id = bp.part_id where bp.batch_id = #{batchId})
+        <if test="partName != null and partName != ''">
+            AND p.part_name LIKE CONCAT('%', #{partName}, '%')
+        </if>
+        <if test="partTypeName != null and partTypeName != ''">
+            AND pt.part_type_name LIKE CONCAT('%', #{partTypeName}, '%')
+        </if>
+    </select>
+
+</mapper>

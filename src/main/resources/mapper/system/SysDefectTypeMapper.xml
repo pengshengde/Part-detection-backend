@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot1.mapper.SysDefectTypeMapper">
+
+    <resultMap id="defectTypeResult" type="com.example.springboot1.entity.browser.quality.SysDefectType">
+        <id         property="defectTypeId"        column="defect_type_id"         />
+        <result     property="defectTypeName"      column="defect_type_name"       />
+        <result     property="defectDescription"   column="defect_description"     />
+        <result     property="delFlag"            column="del_flag"              />
+        <result     property="createBy"              column="create_by"              />
+        <result     property="createTime"            column="create_time"            />
+        <result     property="updateBy"           column="update_by"             />
+        <result     property="updateTime"         column="update_time"           />
+        <result     property="remark"                column="remark"                 />
+    </resultMap>
+
+    <sql id="selectDefectTypeVo">
+        select distinct dt.defect_type_id, dt.defect_type_name, dt.defect_description, dt.create_time, dt.remark
+        from sys_defect_type dt
+    </sql>
+
+    <select id="selectDefectTypeList" parameterType="com.example.springboot1.entity.browser.quality.SysDefectType" resultMap="defectTypeResult">
+        select defect_type_id, defect_type_name, defect_description, create_by, create_time, remark
+        from sys_defect_type
+        where del_flag = '0'
+        <if test="defectTypeId != null and defectTypeId != 0">
+            AND defect_type_id = #{defectTypeId}
+        </if>
+        <if  test="defectTypeName != null and defectTypeName != ''">
+            AND defect_type_name like concat('%', #{defectTypeName}, '%')
+        </if>
+        <if test="defectDescription != null and defectDescription != ''">
+            AND defect_description like concat('%', #{defectDescription}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+    </select>
+
+
+    <select id="selectDefectTypeById" parameterType="Long" resultMap="defectTypeResult">
+        <include refid="selectDefectTypeVo"/>
+        where dt.defect_type_id = #{defectTypeId} and dt.del_flag = '0'
+    </select>
+
+    <select id="selectDefectTypeIdByName" parameterType="String" resultType="Long">
+        select defect_type_id from sys_defect_type where defect_type_name = #{defectTypeName} limit 1
+    </select>
+
+    <select id="selectDefectTypeIdByDescription" parameterType="String" resultType="Long">
+        select defect_type_id from sys_defect_type where defect_description = #{defectTypeDescription} limit 1
+    </select>
+
+    <insert id="insertDefectType" parameterType="com.example.springboot1.entity.browser.quality.SysDefectType" useGeneratedKeys="true" keyProperty="defectTypeId">
+        insert into sys_defect_type(
+            <if test="defectTypeId != null and defectTypeId != 0">defect_type_id,</if>
+            <if test="defectTypeName != null and defectTypeName != ''">defect_type_name,</if>
+            <if test="defectDescription != null and defectDescription != ''">defect_description,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            create_time
+        )values (
+            <if test="defectTypeId != null and defectTypeId != ''">#{defectTypeId},</if>
+            <if test="defectTypeName != null and defectTypeName != ''">#{defectTypeName},</if>
+            <if test="defectDescription != null and defectDescription != ''">#{defectDescription},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            sysdate()
+        )
+    </insert>
+
+    <update id="updateDefectType" parameterType="com.example.springboot1.entity.browser.quality.SysDefectType">
+        update sys_defect_type
+        <set>
+            <if test="defectTypeName != null and defectTypeName != ''">defect_type_name = #{defectTypeName},</if>
+            <if test="defectDescription != null and defectDescription != ''">defect_description = #{defectDescription},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where defect_type_id = #{defectTypeId}
+    </update>
+
+    <delete id="deleteDefectTypeByIds" parameterType="Long">
+        update sys_defect_type set del_flag = '2'
+        where defect_type_id in
+        <foreach collection="array" item="defectTypeId" open="(" separator="," close=")">
+            #{defectTypeId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteDefectTypeById" parameterType="Long">
+        update sys_defect_type set del_flag = '2'  where defect_type_id = #{defectTypeId}
+    </delete>
+    
+    <select id="checkDefectTypeNameUnique" parameterType="String" resultMap="defectTypeResult">
+        select defect_type_id, defect_type_name
+        from sys_defect_type
+        where defect_type_name = #{defectTypeName} and del_flag = '0'
+    </select>
+    
+    <select id="checkDefectDescription" parameterType="String" resultMap="defectTypeResult">
+        select defect_type_id, defect_description
+        from sys_defect_type
+        where defect_description = #{defectDescription} and del_flag = '0'
+    </select>
+
+
+
+</mapper>

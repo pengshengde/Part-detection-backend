@@ -1,7 +1,7 @@
 package com.example.springboot1.service.Impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.springboot1.Entity.ImageResult;
+import com.example.springboot1.entity.client.ImageResult;
 import com.example.springboot1.controller.GetImageUrlController;
 import com.example.springboot1.mapper.GetImageMapper;
 import com.example.springboot1.service.GetImageService;

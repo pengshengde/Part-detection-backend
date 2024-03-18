@@ -1,8 +1,8 @@
 package com.example.springboot1.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.springboot1.Entity.ImageInfo;
-import com.example.springboot1.common.Result;
+import com.example.springboot1.entity.client.ImageInfo;
+import com.example.springboot1.common.client.Result;
 import com.example.springboot1.config.LocalConfig;
 import com.example.springboot1.service.Impl.GetImageUrlServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

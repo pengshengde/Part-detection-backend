@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot1.mapper.SysPartImageMapper">
+
+    <resultMap id="PartImageResult" type="com.example.springboot1.entity.browser.quality.SysPartImage">
+        <result     property="partId"      column="part_id"      />
+        <result     property="imageId"     column="image_id"     />
+    </resultMap>
+
+    <select id="countPartImageByPartId" resultType="Integer">
+        select count(1) from sys_part_image where part_id = #{partId}
+    </select>
+
+
+    <!-- 批量插入 -->
+    <insert id="batchInsertPartImage" >
+        insert into sys_part_image(part_id, image_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.partId}, #{item.imageId})
+        </foreach>
+    </insert>
+
+    <!-- 单独插入 -->
+    <insert id="insertPartImage"  parameterType="com.example.springboot1.entity.browser.quality.SysPartImage">
+        insert into sys_part_image(part_id, image_id)
+        values (#{partId}, #{imageId})
+    </insert>
+
+    <delete id="deletePartImageInfo" parameterType="com.example.springboot1.entity.browser.quality.SysPartImage">
+        delete
+        from sys_part_image
+        where part_id = #{partId} and  image_id = #{imageId}
+    </delete>
+
+    <delete id="deletePartImageInfos">
+        delete from sys_part_image where  part_id = #{partId} and image_id in
+        <foreach collection="imageIds" item="imageId"  open="(" close=")" separator=",">
+            #{imageId}
+        </foreach>
+    </delete>
+
+    <!-- 删除某图片的所有关联 -->
+    <delete id="deletePartImageByImageId" parameterType="Long">
+        delete from sys_part_image where image_id = #{imageId}
+    </delete>
+
+    <select id="selectPartImageByImageId" resultMap="PartImageResult" parameterType="Long">
+        select * from sys_part_image where image_id = #{imageId}
+    </select>
+
+    <select id="selectImageIdsByPartId" resultType="Long">
+        select image_id from sys_part_image where part_id = #{partId}
+    </select>
+
+    <delete id="deletePartImageByPartId" parameterType="Long">
+        delete from sys_part_image where part_id = #{partId}
+    </delete>
+
+
+
+</mapper>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot1.mapper.SysImageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ImageResult" type="com.example.springboot1.entity.browser.quality.SysImage">
+        <id     property="imageId"          column="image_id"               />
+        <result property="imageName"        column="image_name"             />
+        <result property="imageType"        column="image_type"             />
+        <result property="partTypeId"       column="part_type_id"           />
+        <result property="partTypeName"     column="part_type_name"         />
+        <result property="detectTime"       column="detect_time"            />
+        <result property="detectStatus"     column="detect_status"          />
+        <result property="defectTypeName"   column="defect_type_name"       />
+        <result property="delFlag"          column="del_flag"               />
+        <result property="originalImageUrl" column="original_image_url"     />
+        <result property="originalImageName" column="original_image_name"   />
+        <result property="resultImageUrl"   column="result_image_url"       />
+        <result property="resultImageName"  column="result_image_name"     />
+        <result property="createTime"       column="create_time"            />
+        <result property="createBy"         column="create_by"              />
+        <result property="remark"           column="remark"                 />
+        <collection property="defectTypes" javaType="java.util.List"    resultMap="defectTypeResult"/>
+    </resultMap>
+
+    <resultMap id="defectTypeResult" type="com.example.springboot1.entity.browser.quality.SysDefectType">
+        <id     property="defectTypeId"      column="defect_type_id"       />
+        <result property="defectTypeName"    column="defect_type_name"     />
+        <result property="defectDescription"    column="defect_description"     />
+    </resultMap>
+
+    <sql id="selectImageVo" >
+        select i.image_id, i.image_name, i.image_type, i.part_type_id, i.detect_time,i.detect_status, i.original_image_url,i.original_image_name,
+               i.result_image_url, i.result_image_name, i.create_time, i.create_by, i.remark,
+               pt.part_type_name,
+               dt.defect_type_id, dt.defect_type_name, dt.defect_description
+        from sys_image i
+            inner join sys_part_type pt on i.part_type_id = pt.part_type_id
+            left join sys_image_defect_type idt on i.image_id = idt.image_id
+            left join sys_defect_type dt on dt.defect_type_id = idt.defect_type_id
+    </sql>
+
+    <select id="selectImageList" parameterType="com.example.springboot1.entity.browser.quality.SysImage" resultMap="ImageResult">
+        <include refid="selectImageVo"/>
+        where i.detect_status = '1' and i.del_flag = '0'
+        <if test="imageId != null and imageId != 0 ">
+            AND i.image_id = #{imageId}
+        </if>
+        <if test="imageName != null and imageName != ''">
+            AND i.image_name like concat('%', #{imageName}, '%')
+        </if>
+        <if test="partTypeId != null and partTypeId != 0">
+            AND i.part_type_id = #{partTypeId}
+        </if>
+        <if test="partTypeName != null and partTypeName != ''">
+            AND pt.part_type_name LIKE CONCAT('%', #{partTypeName}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 设备开始时间检索 -->
+            AND date_format(i.detect_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 设备结束时间检索 -->
+            AND date_format(i.detect_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+    </select>
+
+
+    <insert id="insertImage" parameterType="com.example.springboot1.entity.browser.quality.SysImage" >
+        insert into sys_image(
+            <if test="imageId != null and imageId != 0 ">image_id,</if>
+            <if test="imageName != null and imageName != ''">image_name,</if>
+            <if test="partTypeId != null and partTypeId != 0">part_type_id,</if>
+            <if test="imageType != null and imageType != ''">image_type,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="detectStatus != null and detectStatus != ''">detect_status,</if>
+            <if test="originalImageUrl != null and originalImageUrl != ''">original_image_url,</if>
+            <if test="originalImageName != null and originalImageName != ''">original_image_name,</if>
+            <if test="resultImageUrl != null and resultImageUrl != ''">result_image_url,</if>
+            <if test="resultImageName != null and resultImageName != ''">result_image_name,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            detect_time,create_time
+        )values (
+            <if test="imageId != null and imageId != 0 ">#{imageId},</if>
+            <if test="imageName != null and imageName != ''">#{imageName},</if>
+            <if test="partTypeId != null and partTypeId != 0">#{partTypeId},</if>
+            <if test="imageType != null and imageType != ''">#{imageType},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="detectStatus != null and detectStatus != ''">#{detectStatus},</if>
+            <if test="originalImageUrl != null and originalImageUrl != ''">#{originalImageUrl},</if>
+            <if test="originalImageName != null and originalImageName != ''">#{originalImageName},</if>
+            <if test="resultImageUrl != null and resultImageUrl != ''">#{resultImageUrl},</if>
+            <if test="resultImageName != null and resultImageName != ''">#{resultImageName},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            sysdate(),sysdate()
+        )
+    </insert>
+
+    <select id="selectIdByImageName" resultType="Long">
+        select image_id
+        from sys_image
+        where image_name = #{imageName} limit 1
+    </select>
+
+    <select id="selectImageByImageId" parameterType="Long" resultMap="ImageResult">
+        <include refid="selectImageVo"/>
+        where i.image_id = #{imageId}
+    </select>
+
+    <select id="checkImageNameUnique" parameterType="String" resultMap="ImageResult">
+        select image_id, image_name from sys_image where image_name = #{imageName} limit 1
+    </select>
+
+    <delete id="deleteImageById" parameterType="Long">
+        update sys_image set del_flag = '2' where image_id = #{imageId}
+    </delete>
+
+
+    <select id="selectAllocatedImageList" parameterType="com.example.springboot1.entity.browser.quality.SysImage" resultMap="ImageResult">
+        select i.image_id, i.image_name, i.image_type, i.part_type_id, i.detect_time,i.detect_status, i.original_image_url,i.original_image_name,
+               i.result_image_url, i.result_image_name, i.create_time, i.create_by, i.remark,
+               pt.part_type_name, GROUP_CONCAT(dt.defect_description) AS defect_type_name
+        from sys_image i
+            inner join sys_part_type pt on i.part_type_id = pt.part_type_id
+            left join sys_image_defect_type idt on i.image_id = idt.image_id
+            left join sys_defect_type dt on dt.defect_type_id = idt.defect_type_id
+            left join sys_part_image pi on i.image_id = pi.image_id
+            left join sys_part_data p on p.part_id = pi.part_id
+        where i.del_flag = '0'
+        <if test="imageName != null and imageName != ''">
+            AND i.image_name like concat('%', #{imageName}, '%')
+        </if>
+        <if test="partId != null and partId != 0 ">
+            AND p.part_id = #{partId}
+        </if>
+        <if test="imageId != null and imageId != 0 ">
+            AND i.image_id = #{imageId}
+        </if>
+        <if test="partTypeName != null and partTypeName != ''">
+            AND pt.part_type_name LIKE CONCAT('%', #{partTypeName}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 设备开始时间检索 -->
+            AND date_format(i.detect_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 设备结束时间检索 -->
+            AND date_format(i.detect_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+        <if test="defectTypeName != null and defectTypeName != ''">
+            AND dt.defect_description LIKE CONCAT('%', #{defectTypeName}, '%')
+        </if>
+        GROUP BY  i.image_id
+    </select>
+
+    <select id="selectUnallocatedImageList" parameterType="com.example.springboot1.entity.browser.quality.SysImage" resultMap="ImageResult">
+        select i.image_id, i.image_name, i.image_type, i.part_type_id, i.detect_time,i.detect_status, i.original_image_url,i.original_image_name,
+        i.result_image_url, i.result_image_name, i.create_time, i.create_by, i.remark,
+        pt.part_type_name, GROUP_CONCAT(dt.defect_description) AS defect_type_name
+        from sys_image i
+        inner join sys_part_type pt on i.part_type_id = pt.part_type_id
+        left join sys_image_defect_type idt on i.image_id = idt.image_id
+        left join sys_defect_type dt on dt.defect_type_id = idt.defect_type_id
+        left join sys_part_image pi on i.image_id = pi.image_id
+        left join sys_part_data p on p.part_id = pi.part_id
+        where i.del_flag = '0' and (p.part_id = #{partId} or p.part_id is null) and i.detect_status = '1'
+          and i.image_id not in (select i.image_id from sys_image i inner join sys_part_image pi on i.image_id = pi.image_id  where  pi.part_id = #{partId})
+        <if test="imageName != null and imageName != ''">
+            AND i.image_name like concat('%', #{imageName}, '%')
+        </if>
+        <if test="partTypeName != null and partTypeName != ''">
+            AND pt.part_type_name LIKE CONCAT('%', #{partTypeName}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 设备开始时间检索 -->
+            AND date_format(i.detect_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 设备结束时间检索 -->
+            AND date_format(i.detect_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+        GROUP BY  i.image_id
+    </select>
+
+
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot1.mapper.SysPartDefectTypeMapper">
+
+    <resultMap id="PartDefectType" type="com.example.springboot1.entity.browser.quality.SysPartDefectType">
+        <result      property="partId"         column="part_id"           />
+        <result      property="defectTypeId"    column="defect_type_id"     />
+    </resultMap>
+
+    <select id="countPartDefectType" resultType="Integer" parameterType="com.example.springboot1.entity.browser.quality.SysPartDefectType">
+        select count(1)
+        from sys_part_defect_type
+        where part_id = #{partId}
+        <if test="defectTypeId != null and defectTypeId != 0">
+            AND defect_type_id = #{defectTypeId}
+        </if>
+    </select>
+
+
+    <!-- 批量插入 -->
+    <insert id="batchInsertPartDefectType">
+        insert into
+        sys_part_defect_type(part_id,defect_type_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.partId}, #{item.defectTypeId})
+        </foreach>
+    </insert>
+
+    <insert id="insertPartDefectType" parameterType="com.example.springboot1.entity.browser.quality.SysPartDefectType" >
+        insert into sys_part_defect_type(part_id,defect_type_id)
+        values (#{partId}, #{defectTypeId})
+    </insert>
+
+    <delete id="deletePartDefectTypeInfo" parameterType="com.example.springboot1.entity.browser.quality.SysPartDefectType">
+        delete
+        from sys_part_defect_type
+        where part_id = #{partId} and  defect_type_id = #{defectTypeId}
+    </delete>
+
+    <delete id="deletePartDefectTypeByPartId" parameterType="Long">
+        delete from sys_part_defect_type
+        where part_id = #{partId}
+    </delete>
+
+    <delete id="deletePartDefectTypeByDefectTypeId" parameterType="Long">
+        delete from sys_part_defect_type
+        where defect_type_id = #{defectTypeId}
+    </delete>
+
+
+    <delete id="deletePartDefectTypeByDefectTypeIds" parameterType="Long">
+        delete from sys_part_defect_type
+        where defect_type_id in
+        <foreach collection="array" item="defectTypeId" open="(" separator="," close=")">
+            #{defectTypeId}
+        </foreach>
+    </delete>
+
+    <select id="selectDefectTypeByPartId" parameterType="Long" resultType="Long">
+        select defect_type_id from sys_part_defect_type where part_id = #{partId}
+    </select>
+
+
+
+
+</mapper>

@@ -1,25 +1,21 @@
 package com.example.springboot1.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.example.springboot1.Entity.GetAppSecret;
-import com.example.springboot1.common.Result;
-import com.example.springboot1.common.SignUtil;
+import com.example.springboot1.entity.client.GetAppSecret;
+import com.example.springboot1.common.client.Result;
+import com.example.springboot1.common.client.SignUtil;
 import com.example.springboot1.service.Impl.GetAppSecretServiceImpl;
 import com.example.springboot1.service.Impl.GetAppSignServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
-import com.google.gson.Gson;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-import static com.example.springboot1.common.SignUtil.generateUUID;
+import static com.example.springboot1.common.client.SignUtil.generateUUID;
 
 
 @RestController

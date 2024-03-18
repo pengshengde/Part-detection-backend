@@ -1,36 +1,29 @@
 package com.example.springboot1.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
-import com.example.springboot1.Entity.*;
-import com.example.springboot1.common.Result;
+import com.example.springboot1.common.client.DefectType;
+import com.example.springboot1.entity.client.Image;
+import com.example.springboot1.entity.client.ImageResult;
+import com.example.springboot1.entity.client.MmdectionResult;
+import com.example.springboot1.entity.client.Parts;
+import com.example.springboot1.common.client.Result;
 import com.example.springboot1.config.LocalConfig;
-import com.example.springboot1.service.GetImageUrlService;
-import com.example.springboot1.service.IImageService;
 import com.example.springboot1.service.Impl.GetAppSecretServiceImpl;
 import com.example.springboot1.service.Impl.GetImageServiceImpl;
 import com.example.springboot1.service.Impl.ImageServiceImpl;
 import com.example.springboot1.service.Impl.PartServiceImpl;
 import com.example.springboot1.utils.HttpUtils;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import static com.example.springboot1.utils.HttpUtils.pythonPost;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/api/image")
+@RequestMapping("/api/image1")
 public class GetImageController {
 
     @Autowired
@@ -58,6 +51,16 @@ public class GetImageController {
     private String image_base64;
     private String sign;
     private String part_id;
+
+    // 辅助方法：将拼音缺陷转换为中文缺陷
+    private String convertToChinese(String pinyinDefect) {
+        for (DefectType defectType : DefectType.values()) {
+            if (defectType.getPinyinDefect().equals(pinyinDefect)) {
+                return defectType.getChineseDefect();
+            }
+        }
+        return pinyinDefect; // 如果找不到对应的中文缺陷，返回原始拼音缺陷
+    }
 
 
     /**
@@ -105,12 +108,16 @@ public class GetImageController {
 
 
                 List<String> defect_type = mmdectionResult.getDetect_type();
-
+                List<String> defect_type_chinese = new ArrayList<>();
 
                 if (defect_type.size()==0){
                     imageResult.setDefect_type("正常");
                 }else {
-                    imageResult.setDefect_type(String.join(", ",defect_type));
+                    for (String pinyinDefect : defect_type) {
+                        String chineseDefect = convertToChinese(pinyinDefect);
+                        defect_type_chinese.add(chineseDefect);
+                    }
+                    imageResult.setDefect_type(String.join(", ",defect_type_chinese));
                 }
 
                 imageResult.setImage_id(image_id);
@@ -132,7 +139,7 @@ public class GetImageController {
                     List<String> existDefectType = existParts.getDefect_type();
 
                     Set<String> set = new HashSet<>();
-                    set.addAll(defect_type);
+                    set.addAll(defect_type_chinese);
                     set.addAll(existDefectType);
                     List<String> mergedList = new ArrayList<>(set);                 // 确保合并后的列表中没有重复元素，
 
@@ -148,7 +155,7 @@ public class GetImageController {
                 }else {
                     Parts newParts = new Parts();                                  // 如果不存在，保存零件信息
                     newParts.setPart_id(part_id);
-                    newParts.setDefect_type(defect_type);
+                    newParts.setDefect_type(defect_type_chinese);
                     newParts.setDetect_time(nowTime);
                     boolean savePartResult = partServiceImpl.save(newParts);
 
@@ -272,28 +279,28 @@ public class GetImageController {
             if(imageServiceImpl.count(queryWrapper1) == 0){                                     // 若检测到所有图片已经删除，则删除该零件信息
                 partServiceImpl.remove(new QueryWrapper<Parts>().eq("part_id", part_id));
             } else {                                                                            // 如果删除图片为最后一张，则不需要更新零件缺陷
-                String imageDefectType = image.getDefect_type();                                    // 获取该图片的缺陷
+                String ImageDefectType = image.getDefect_type();                                    // 获取该图片的缺陷
 
-                String[] values =  imageDefectType.split(",");                                // 将该图片存在的缺陷转化为字典
+                String[] values =  ImageDefectType.split(",");                                // 将该图片存在的缺陷转化为字典
                 for(String value : values){                                                         // 对该字典中存在的缺陷进行遍历
                     queryWrapper.like("defect_type", value);
                     if (imageServiceImpl.count(queryWrapper)==0){                                   // 检查剩余缺陷图片中是否存在该缺陷，若不存在则需要更新零件的缺陷信息
                         QueryWrapper<Parts> queryWrapperPart = new QueryWrapper<Parts>();           // 找到该图片的零件信息
                         queryWrapperPart.eq("part_id",part_id);
-                        List<String> partDefectType =  partServiceImpl.getOne(queryWrapperPart).getDefect_type();   // 获得该零件的缺陷类型
-                        partDefectType.remove(value);                                                // 去掉上面已删除的图片缺陷类型
+                        List<String> PartDefectType =  partServiceImpl.getOne(queryWrapperPart).getDefect_type();   // 获得该零件的缺陷类型
+                        PartDefectType.remove(value);                                                // 去掉上面已删除的图片缺陷类型
 
                         Integer id = partServiceImpl.getOne(queryWrapperPart).getId();
 
                         Parts updatePart = new Parts();
                         updatePart.setId(id);
-                        updatePart.setDefect_type(partDefectType);
+                        updatePart.setDefect_type(PartDefectType);
                         updatePart.setPart_id(part_id);
 
 
                         /*UpdateWrapper<Parts> updateWrapper = new UpdateWrapper<Parts>();             //  更新该零件的缺陷类型
                         updateWrapper.eq("part_id",part_id);
-                        updateWrapper.set("defect_type",partDefectType);*/
+                        updateWrapper.set("defect_type",PartDefectType);*/
                         partServiceImpl.saveOrUpdate(updatePart);
                     }
                 }

@@ -1,7 +1,7 @@
 package com.example.springboot1.service.Impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.springboot1.Entity.ImageInfo;
+import com.example.springboot1.entity.client.ImageInfo;
 import com.example.springboot1.config.LocalConfig;
 import com.example.springboot1.mapper.ImageUrlMapper;
 import com.example.springboot1.service.GetImageUrlService;
@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Service
