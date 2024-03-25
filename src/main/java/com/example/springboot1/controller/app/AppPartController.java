@@ -27,7 +27,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/api/part")
+@RequestMapping("/app/part")
 public class AppPartController extends BaseController
 {
     @Autowired
@@ -38,7 +38,7 @@ public class AppPartController extends BaseController
 
 
     @GetMapping("/list")
-    @ApiOperation("零件信息查询接口")
+    @ApiOperation(value = "零件查询接口", notes = "根据传入信息返回零件信息列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "sign", value = "签名信息", defaultValue = "null",required = true),
             @ApiImplicitParam(name = "partName", value = "零件名称", defaultValue = "null"),
@@ -49,12 +49,12 @@ public class AppPartController extends BaseController
             @ApiImplicitParam(name = "params[endTime]", value = "检测时间范围", defaultValue = "null")
 
     })
+
     public TableDataInfo list(SysPart sysPart)
     {
         if (!signService.checkSign(sysPart.getSign())){
             return TableDataInfo.error(HttpStatus.UNAUTHORIZED, "鉴权失败，请检查sign是否过期");
         }
-
         // 查询新增时间
         startPage();
         List<SysPart> list = partService.selectPartIds(sysPart);
@@ -70,6 +70,7 @@ public class AppPartController extends BaseController
      * @param sysPart
      * @return
      */
+    @ApiOperation(value = "零件新增接口", notes = "新增零件信息")
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysPart sysPart)
     {
@@ -88,6 +89,7 @@ public class AppPartController extends BaseController
      * @param part
      * @return
      */
+    @ApiOperation(value = "零件删除接口", notes = "根据零件的Id删除零件信息")
     @DeleteMapping
     public AjaxResult delete(@Validated SysPart part)
     {

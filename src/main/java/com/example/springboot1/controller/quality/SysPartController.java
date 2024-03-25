@@ -13,6 +13,7 @@ import com.example.springboot1.entity.browser.quality.SysPart;
 import com.example.springboot1.entity.browser.quality.SysPartImage;
 import com.example.springboot1.service.ISysImageService;
 import com.example.springboot1.service.ISysPartService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -41,6 +42,7 @@ public class SysPartController extends BaseController {
     /**
      * 查询零件列表
      */
+    @ApiOperation(value = "查询检测零件")
     @PreAuthorize("@ss.hasPermi('quality:part:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysPart part)
@@ -54,6 +56,7 @@ public class SysPartController extends BaseController {
     /**
      * 导出所有零件的信息
      */
+    @ApiOperation(value = "零件导出")
     @Log(title = "零件", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('quality:part:export')")
     @PostMapping("/export")
@@ -67,6 +70,7 @@ public class SysPartController extends BaseController {
     /**
      * 根据零件的Id查询零件的详细信息
      */
+    @ApiOperation(value = "查询零件详细")
     @PreAuthorize("@ss.hasPermi('quality:part:query')")
     @GetMapping("/{partId}")
     public AjaxResult getInfo(@PathVariable Long partId)
@@ -84,6 +88,7 @@ public class SysPartController extends BaseController {
     /**
      * 修改零件的信息
      */
+    @ApiOperation(value = "零件修改")
     @PreAuthorize("@ss.hasPermi('quality:part:edit')")
     @Log(title = "零件", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -101,6 +106,7 @@ public class SysPartController extends BaseController {
     /**
      * 零件的检测结果修改
      */
+    @ApiOperation(value = "零件检测结果修改")
     @PutMapping("/changeResult")
     public AjaxResult changeResult(@RequestBody SysPart part)
     {
@@ -111,6 +117,7 @@ public class SysPartController extends BaseController {
     /**
      * 删除零件信息
      */
+    @ApiOperation(value = "零件删除")
     @PreAuthorize("@ss.hasPermi('quality:part:remove')")
     @Log(title = "零件", businessType = BusinessType.DELETE)
     @DeleteMapping("/{partIds}")
@@ -122,6 +129,7 @@ public class SysPartController extends BaseController {
     /**
      * 查询某零件的所有图片
      */
+    @ApiOperation(value = "查询零件所有图片")
     @PreAuthorize("@ss.hasPermi('quality:part:list')")
     @GetMapping("/authImage/allocatedList")
     public TableDataInfo allocatedList(SysImage image)
@@ -131,6 +139,7 @@ public class SysPartController extends BaseController {
         return getDataTable(list);
     }
 
+    @ApiOperation(value = "查询零件未分配图片")
     @PreAuthorize("@ss.hasPermi('quality:part:list')")
     @GetMapping("/authImage/unallocatedList")
     public TableDataInfo unallocatedList(SysImage image)
@@ -140,6 +149,7 @@ public class SysPartController extends BaseController {
         return getDataTable(list);
     }
 
+    @ApiOperation(value = "零件分配图片")
     @PreAuthorize("@ss.hasPermi('quality:part:edit')")
     @Log(title = "分配图片", businessType = BusinessType.GRANT)
     @PutMapping("/authImage/selectAll")
@@ -148,6 +158,7 @@ public class SysPartController extends BaseController {
         return toAjax(partService.insertAuthImages(partId, imageIds));
     }
 
+    @ApiOperation(value = "取消零件分配图片")
     @PreAuthorize("@ss.hasPermi('quality:part:edit')")
     @Log(title = "分配图片", businessType = BusinessType.GRANT)
     @PutMapping("/authImage/cancel")
@@ -164,6 +175,7 @@ public class SysPartController extends BaseController {
         return toAjax(partService.deleteAuthImages(partId, imageIds));
     }
 
+    @ApiOperation(value = "批量取消分配图片")
     @Log(title = "图片导出", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('quality:part:export')")
     @PostMapping("/authImage/export")
@@ -172,6 +184,7 @@ public class SysPartController extends BaseController {
         ExcelUtil<SysImage> util = new ExcelUtil<SysImage>(SysImage.class);
         util.exportExcel(response, list, "零件图片列表");
     }
+
 
     @PreAuthorize("@ss.hasPermi('quality:part:query')")
     @GetMapping("/authImage/{imageId}")

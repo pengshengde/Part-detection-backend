@@ -11,6 +11,7 @@ import com.example.springboot1.entity.browser.quality.SysBatch;
 import com.example.springboot1.entity.browser.quality.SysPart;
 import com.example.springboot1.service.ISysBatchService;
 import com.example.springboot1.service.ISysPartService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -36,6 +37,7 @@ public class SysBatchFController extends BaseController {
     /**
      * 查询未检测零件的批次接口
      */
+    @ApiOperation(value = "未检测批次查询")
     @PreAuthorize("@ss.hasPermi('quality:batchF:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysBatch batch)
@@ -50,6 +52,7 @@ public class SysBatchFController extends BaseController {
      * @param response
      * @param batch
      */
+    @ApiOperation(value = "未检测批次导出")
     @Log(title = "未检测零件批次", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('quality:batchF:export')")
     @PostMapping("/export")
@@ -65,6 +68,7 @@ public class SysBatchFController extends BaseController {
      * @param batchId
      * @return
      */
+    @ApiOperation(value = "未检测批次详细查询")
     @PreAuthorize("@ss.hasPermi('quality:batchF:query')")
     @GetMapping("/{batchId}")
     public AjaxResult getInfo(@PathVariable Long batchId)
@@ -82,6 +86,7 @@ public class SysBatchFController extends BaseController {
     /**
      * 未检测零件批次的新增接口
      */
+    @ApiOperation(value = "未检测批次新增")
     @PreAuthorize("@ss.hasPermi('quality:batchF:add')")
     @Log(title = "未检测零件批次", businessType = BusinessType.INSERT)
     @PostMapping
@@ -124,6 +129,7 @@ public class SysBatchFController extends BaseController {
      * @param batch
      * @return
      */
+    @ApiOperation(value = "未检测批次修改")
     @PreAuthorize("@ss.hasPermi('quality:batchF:edit')")
     @Log(title = "未检测零件批次", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -139,6 +145,7 @@ public class SysBatchFController extends BaseController {
     }
 
 
+    @ApiOperation(value = "未检测批次删除")
     @PreAuthorize("@ss.hasPermi('quality:batchF:remove')")
     @Log(title = "未检测零件批次", businessType = BusinessType.DELETE)
     @DeleteMapping("/{batchIds}")

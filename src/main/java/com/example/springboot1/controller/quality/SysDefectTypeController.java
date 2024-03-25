@@ -8,6 +8,7 @@ import com.example.springboot1.common.browser.enums.BusinessType;
 import com.example.springboot1.common.browser.utils.poi.ExcelUtil;
 import com.example.springboot1.entity.browser.quality.SysDefectType;
 import com.example.springboot1.service.ISysDefectTypeService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -32,6 +33,7 @@ public class SysDefectTypeController extends BaseController
      * @param defectType
      * @return
      */
+    @ApiOperation(value = "零件缺陷查询")
     @PreAuthorize("@ss.hasPermi('quatity:defect:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysDefectType defectType)
@@ -46,6 +48,7 @@ public class SysDefectTypeController extends BaseController
      * @param response
      * @param defectType
      */
+    @ApiOperation(value = "零件缺陷导出")
     @Log(title = "零件缺陷类型", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('quatity:defect:export')")
     @PostMapping("/export")
@@ -61,6 +64,7 @@ public class SysDefectTypeController extends BaseController
      * @param defectTypeId
      * @return
      */
+    @ApiOperation(value = "零件缺陷详细查询")
     @PreAuthorize("@ss.hasPermi('quatity:defect:query')")
     @GetMapping(value = "/{defectTypeId}")
     public AjaxResult getInfo(@PathVariable Long defectTypeId)
@@ -74,6 +78,7 @@ public class SysDefectTypeController extends BaseController
      * @param defectType
      * @return
      */
+    @ApiOperation(value = "零件缺陷新增")
     @PreAuthorize("@ss.hasPermi('quatity:defect:add')")
     @Log(title = "零件缺陷类型", businessType = BusinessType.INSERT)
     @PostMapping
@@ -96,6 +101,7 @@ public class SysDefectTypeController extends BaseController
      * @param defectType
      * @return
      */
+    @ApiOperation(value = "零件缺陷修改")
     @PreAuthorize("@ss.hasPermi('quatity:defect:edit')")
     @Log(title = "零件缺陷类型", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -120,6 +126,7 @@ public class SysDefectTypeController extends BaseController
      * @param defectTypeIds
      * @return
      */
+    @ApiOperation(value = "零件缺陷删除")
     @PreAuthorize("@ss.hasPermi('system:defectType:remove')")
     @Log(title = "零件缺陷类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{defectTypeIds}")

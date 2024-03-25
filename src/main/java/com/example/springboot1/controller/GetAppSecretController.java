@@ -34,7 +34,6 @@ public class GetAppSecretController{
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "注册ID")
     })
-    @ApiOperation(value = "权限注册",notes = "获取appId，返回appSecret")
     @GetMapping("/appSecret")
     public Result getSecret(@RequestParam String appId) throws JsonProcessingException {
 
@@ -76,7 +75,6 @@ public class GetAppSecretController{
             @ApiImplicitParam(name = "sign", value = "签名，由appId、timestamp、appSecret生成")
 
     })
-    @ApiOperation(value = "权限鉴定")
     @GetMapping("/judgeSign")
     public Result getSign(@RequestParam("appId") String appId, @RequestParam("timestamp")String timestamp,
                            @RequestParam("sign") String sign){

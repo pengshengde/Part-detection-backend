@@ -5,11 +5,9 @@ import com.example.springboot1.common.browser.core.controller.BaseController;
 import com.example.springboot1.common.browser.core.domain.AjaxResult;
 import com.example.springboot1.entity.browser.quality.SysSign;
 import com.example.springboot1.service.ISysSignService;
-import com.example.springboot1.service.Impl.SysSignServiceImpl;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
  * 鉴权注册信息
  */
 @RestController
-@RequestMapping("/api/sign")
-public class SysSignController extends BaseController
+@RequestMapping("/app/sign")
+public class AppSignController extends BaseController
 {
     @Autowired
     private ISysSignService signService;
@@ -32,7 +30,7 @@ public class SysSignController extends BaseController
     @ApiImplicitParams({
             @ApiImplicitParam(name = "appId", value = "注册ID")
     })
-    @ApiOperation(value = "权限注册",notes = "获取appId，返回appSecret")
+    @ApiOperation(value = "权限新增",notes = "新增appId")
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysSign sign)
     {
@@ -44,6 +42,7 @@ public class SysSignController extends BaseController
         return toAjax(signService.insertAppId(sign));
     }
 
+    @ApiOperation(value = "权限注册",notes = "获取appId，返回appSecret")
     @GetMapping("/register")
     public AjaxResult register(@Validated SysSign sign)
     {
@@ -57,6 +56,7 @@ public class SysSignController extends BaseController
     }
 
 
+    @ApiOperation(value = "权限鉴定",notes = "根据appId，timestamp，sign进行权限鉴定")
     @GetMapping("/judge")
     public AjaxResult judge(@Validated SysSign sysSign)
     {
@@ -84,6 +84,7 @@ public class SysSignController extends BaseController
     }
 
 
+    @ApiOperation(value = "权限检测",notes = "检测鉴权签名sign是否通过")
     @GetMapping("/check")
     public AjaxResult check(@Validated @RequestBody SysSign sysSign)
     {

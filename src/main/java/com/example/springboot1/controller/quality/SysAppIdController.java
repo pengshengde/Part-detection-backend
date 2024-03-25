@@ -33,6 +33,7 @@ public class SysAppIdController extends BaseController
      * @param sign
      * @return
      */
+    @ApiOperation(value = "获取鉴权信息列表")
     @PreAuthorize("@ss.hasPermi('quality:sign:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysSign sign)
@@ -47,6 +48,7 @@ public class SysAppIdController extends BaseController
      * @param response
      * @param sign
      */
+    @ApiOperation(value = "鉴权信息导出")
     @Log(title = "鉴权注册信息", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('quatity:sign:export')")
     @PostMapping("/export")
@@ -62,6 +64,7 @@ public class SysAppIdController extends BaseController
      * @param sign
      * @return
      */
+    @ApiOperation(value = "鉴权信息新增")
     @PreAuthorize("@ss.hasPermi('quality:sign:add')")
     @Log(title = "鉴权注册信息", businessType = BusinessType.INSERT)
     @PostMapping
@@ -80,6 +83,7 @@ public class SysAppIdController extends BaseController
      * @param sign
      * @return
      */
+    @ApiOperation(value = "鉴权信息编辑")
     @PreAuthorize("@ss.hasPermi('quality:sign:edit')")
     @Log(title = "鉴权注册信息", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -98,6 +102,7 @@ public class SysAppIdController extends BaseController
      * @param signId
      * @return
      */
+    @ApiOperation(value = "鉴权信息查询")
     @PreAuthorize("@ss.hasPermi('quality:sign:query')")
     @GetMapping(value = "/{signId}")
     public AjaxResult getInfo(@PathVariable Long signId)
@@ -110,6 +115,7 @@ public class SysAppIdController extends BaseController
      * @param signIds
      * @return
      */
+    @ApiOperation(value = "鉴权信息删除")
     @PreAuthorize("@ss.hasPermi('quality:sign:remove')")
     @Log(title = "鉴权注册信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{signIds}")

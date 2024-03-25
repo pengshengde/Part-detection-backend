@@ -1,6 +1,5 @@
 package com.example.springboot1.controller.app;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.springboot1.common.browser.constant.HttpStatus;
 import com.example.springboot1.common.browser.core.controller.BaseController;
 import com.example.springboot1.common.browser.core.domain.AjaxResult;
@@ -8,9 +7,6 @@ import com.example.springboot1.common.browser.core.page.TableDataInfo;
 import com.example.springboot1.config.LocalConfig;
 import com.example.springboot1.entity.browser.quality.ImageData;
 import com.example.springboot1.entity.browser.quality.SysImage;
-import com.example.springboot1.entity.browser.quality.SysPart;
-import com.example.springboot1.entity.browser.quality.SysSign;
-import com.example.springboot1.entity.client.ImageInfo;
 import com.example.springboot1.entity.client.MmdectionResult;
 import com.example.springboot1.service.ISysImageService;
 import com.example.springboot1.service.ISysPartService;
@@ -19,14 +15,11 @@ import com.example.springboot1.utils.HttpUtils;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +29,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/image")
-public class SysImageController extends BaseController {
+public class AppImageController extends BaseController {
 
     @Autowired
     private ISysImageService imageService;
@@ -52,7 +45,7 @@ public class SysImageController extends BaseController {
 
 
     @GetMapping("/list")
-    @ApiOperation("图片信息查询接口")
+    @ApiOperation(value = "图片查询接口",  notes = "查询已检测的图片信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "sign", value = "签名信息", defaultValue = "null",required = true),
             @ApiImplicitParam(name = "partId", value = "零件编号", defaultValue = "null"),
@@ -62,6 +55,7 @@ public class SysImageController extends BaseController {
             @ApiImplicitParam(name = "params[endTime]", value = "检测时间范围", defaultValue = "null")
 
     })
+
     public TableDataInfo list(SysImage sysImage)
     {
         // 先检查零件的鉴权信息
@@ -78,6 +72,7 @@ public class SysImageController extends BaseController {
         return  getDataTable(list);
     }
 
+    @ApiOperation(value = "图片检测接口",  notes = "根据传入的图片信息进行检测")
     @PostMapping
     public TableDataInfo add(@Validated @RequestBody ImageData imageData)
     {
@@ -136,6 +131,7 @@ public class SysImageController extends BaseController {
 
 
     @DeleteMapping
+    @ApiOperation(value = "图片删除接口",  notes = "删除已检测的图片信息")
     public AjaxResult delete(SysImage image)
     {
         // 进行签名鉴权操作

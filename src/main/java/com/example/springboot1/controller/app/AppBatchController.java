@@ -7,8 +7,8 @@ import com.example.springboot1.entity.browser.quality.SysBatch;
 import com.example.springboot1.entity.browser.quality.SysPart;
 import com.example.springboot1.service.ISysBatchService;
 import com.example.springboot1.service.ISysPartService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/sysBatch")
-public class SysBatchController extends BaseController
+public class AppBatchController extends BaseController
 {
     @Autowired
     private ISysBatchService batchService;
@@ -32,6 +32,7 @@ public class SysBatchController extends BaseController
     /**
      * 查询未检测零件批次的接口
      */
+    @ApiOperation(value = "未检测批次查询接口", notes = "根据传入信息返回未检测批次信息列表")
     @GetMapping("/list1")
     public TableDataInfo list1(SysBatch sysBatch)
     {
@@ -43,6 +44,7 @@ public class SysBatchController extends BaseController
     /**
      *  查询已检测零件的批次接口
      */
+    @ApiOperation(value = "已检测批次查询接口", notes = "根据传入信息返回已检测批次信息列表")
     @GetMapping("/list2")
     public TableDataInfo list2(SysBatch sysBatch)
     {
@@ -56,6 +58,7 @@ public class SysBatchController extends BaseController
      * @param batch
      * @return
      */
+    @ApiOperation(value = "批次新增接口", notes = "根据传入批次信息新增批次和相关的零件信息")
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysBatch batch)
     {
@@ -93,6 +96,7 @@ public class SysBatchController extends BaseController
         return toAjax(rows * row1);
     }
 
+    @ApiOperation(value = "批次编辑接口", notes = "根据批次的Id，更新批次和相关的零件信息")
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysBatch batch)
     {

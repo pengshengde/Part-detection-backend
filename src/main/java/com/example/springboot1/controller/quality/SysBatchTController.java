@@ -13,6 +13,7 @@ import com.example.springboot1.entity.browser.quality.SysBatchPart;
 import com.example.springboot1.entity.browser.quality.SysPart;
 import com.example.springboot1.service.ISysBatchService;
 import com.example.springboot1.service.ISysPartService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -39,6 +40,7 @@ public class SysBatchTController extends BaseController {
     /**
      *  查询已检测零件的批次接口
      */
+    @ApiOperation(value = "已检测批次查询")
     @PreAuthorize("@ss.hasPermi('quality:batchT:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysBatch sysBatch)
@@ -53,6 +55,7 @@ public class SysBatchTController extends BaseController {
      * @param response
      * @param batch
      */
+    @ApiOperation(value = "已检测批次导出")
     @Log(title = "已检测零件批次", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('quality:batchT:export')")
     @PostMapping("/export")
@@ -68,6 +71,7 @@ public class SysBatchTController extends BaseController {
      * @param batchId
      * @return
      */
+    @ApiOperation(value = "已检测批次详细查询")
     @PreAuthorize("@ss.hasPermi('quality:batchT:query')")
     @GetMapping("/{batchId}")
     public AjaxResult getInfo(@PathVariable Long batchId)
@@ -87,6 +91,7 @@ public class SysBatchTController extends BaseController {
      * @param batch
      * @return
      */
+    @ApiOperation(value = "已检测批次更新")
     @PreAuthorize("@ss.hasPermi('quality:batchT:edit')")
     @Log(title = "已检测零件批次", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -101,6 +106,7 @@ public class SysBatchTController extends BaseController {
         return toAjax(batchService.updateBatch(batch));
     }
 
+    @ApiOperation(value = "已检测批次删除")
     @PreAuthorize("@ss.hasPermi('quality:batchT:remove')")
     @Log(title = "已检测零件批次", businessType = BusinessType.DELETE)
     @DeleteMapping("/{batchIds}")
@@ -125,6 +131,7 @@ public class SysBatchTController extends BaseController {
      * @param part
      * @return
      */
+    @ApiOperation(value = "已检测批次分配零件查询")
     @PreAuthorize("@ss.hasPermi('quality:batchT:list')")
     @GetMapping("/authPart/allocatedList")
     public TableDataInfo allocatedList(SysPart part)
@@ -137,6 +144,7 @@ public class SysBatchTController extends BaseController {
     /**
      * 查询未被分配的所有零件信息
      */
+    @ApiOperation(value = "已检测批次未分配零件查询")
     @PreAuthorize("@ss.hasPermi('quality:batchT:list')")
     @GetMapping("/authPart/unallocatedList")
     public TableDataInfo unallocatedList(SysPart part)
@@ -151,6 +159,7 @@ public class SysBatchTController extends BaseController {
      * @param response
      * @param part
      */
+    @ApiOperation(value = "已检测批次分配零件导出")
     @Log(title = "零件导出", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('quality:batchT:export')")
     @PostMapping("/authPart/export")
@@ -167,6 +176,7 @@ public class SysBatchTController extends BaseController {
      * @param partIds
      * @return
      */
+    @ApiOperation(value = "批量分配零件")
     @PreAuthorize("@ss.hasPermi('quality:batchT:edit')")
     @Log(title = "分配零件", businessType = BusinessType.GRANT)
     @PutMapping("/authPart/selectAll")
@@ -180,6 +190,7 @@ public class SysBatchTController extends BaseController {
      * @param batchPart
      * @return
      */
+    @ApiOperation(value = "取消分配零件")
     @PreAuthorize("@ss.hasPermi('quality:batchT:edit')")
     @Log(title = "分配零件", businessType = BusinessType.GRANT)
     @PutMapping("/authPart/cancel")
@@ -194,6 +205,7 @@ public class SysBatchTController extends BaseController {
      * @param partIds
      * @return
      */
+    @ApiOperation(value = "批量取消分配零件")
     @PreAuthorize("@ss.hasPermi('quality:batchT:edit')")
     @Log(title = "分配零件", businessType = BusinessType.GRANT)
     @PutMapping("/authPart/cancelAll")

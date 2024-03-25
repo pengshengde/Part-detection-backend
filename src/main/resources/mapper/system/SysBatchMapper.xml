@@ -127,10 +127,10 @@
             AND e.dev_name LIKE CONCAT('%', #{devName}, '%')
         </if>
         <if test="params.beginTime != null and params.beginTime != ''"><!-- 设备开始时间检索 -->
-            AND date_format(b.detect_start_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            AND date_format(b.detect_end_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
         </if>
         <if test="params.endTime != null and params.endTime != ''"><!-- 设备结束时间检索 -->
-            AND date_format(b.detect_start_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            AND date_format(b.detect_end_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
     </select>
 
