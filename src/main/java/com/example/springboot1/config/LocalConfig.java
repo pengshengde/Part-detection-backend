@@ -2,38 +2,54 @@ package com.example.springboot1.config;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@Data
+@ConfigurationProperties(prefix = "local")
 public class LocalConfig {
 
-    @Value("${serverInfo.uploadpath}")
-    private String uploadFilePath;
+    @Value("${local:uploadFilePath")
+    private static String uploadFilePath = "/home/image";
 
-    @Value("${spring.servlet.multipart.max-file-size}")
-    private String maxfilesize;
+    @Value("${local:baseurl}")
+    private static String baseurl = "http://172.20.138.208/image";
 
-    @Value("${serverInfo.baseurl}")
-    private String baseurl;
+    @Value("${local:pythonurl}")
+    private static String pythonurl = "http://172.20.138.208:5000/api/mmdetection/predict";
 
-    @Value("${python.url}")
-    private String pythonurl;
+    public static String getUploadFilePath() {
+        return uploadFilePath;
+    }
 
-    public Long getMaxFileSize(){
-        String str = maxfilesize.substring(0,maxfilesize.length()-2);
-        Long maxSize = 1024 * 1024 * Long.parseLong(str);
-        return maxSize;
+    public static void setUploadFilePath(String uploadFilePath) {
+        LocalConfig.uploadFilePath = uploadFilePath;
     }
 
 
-    public String ContentTypeToExtension(String contentType){
+    public static String getBaseurl() {
+        return baseurl;
+    }
+
+    public static void setBaseurl(String baseurl) {
+        LocalConfig.baseurl = baseurl;
+    }
+
+    public static String getPythonurl() {
+        return pythonurl;
+    }
+
+    public static void setPythonurl(String pythonurl) {
+        LocalConfig.pythonurl = pythonurl;
+    }
+
+
+    public static String ContentTypeToExtension(String contentType){
 
         Map<String, String> mimeTypeToExtension = new HashMap<>();
         mimeTypeToExtension.put("image/jpeg", ".jpg");
@@ -53,7 +69,7 @@ public class LocalConfig {
         return fileExtension;
     }
 
-    public  String GetNowTime(){
+    public static  String GetNowTime(){
         // 读取当前时间
         LocalDateTime currentTime = LocalDateTime.now();
         // 定义日期时间格式

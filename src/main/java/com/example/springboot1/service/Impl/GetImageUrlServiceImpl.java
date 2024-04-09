@@ -5,7 +5,6 @@ import com.example.springboot1.entity.client.ImageInfo;
 import com.example.springboot1.config.LocalConfig;
 import com.example.springboot1.mapper.ImageUrlMapper;
 import com.example.springboot1.service.GetImageUrlService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,9 +16,6 @@ import java.util.UUID;
 @Service
 public class GetImageUrlServiceImpl extends ServiceImpl<ImageUrlMapper,ImageInfo> implements GetImageUrlService {
 
-    @Autowired
-    LocalConfig localConfig;
-
     public ImageInfo uploadImage(MultipartFile file, String imageTag) {
         String fileName = file.getOriginalFilename();
         String fileNameSuffix = fileName.substring(fileName.lastIndexOf(".") + 1);
@@ -30,11 +26,11 @@ public class GetImageUrlServiceImpl extends ServiceImpl<ImageUrlMapper,ImageInfo
         Integer Month = localDateTime.getMonthValue();
 
         long timestamp = System.currentTimeMillis();                       // 获取当前的时间戳
-        String formattedDateTime = localConfig.GetNowTime();                // 获取当前的时间
+        String formattedDateTime = LocalConfig.GetNowTime();                // 获取当前的时间
 
         String sepa = File.separator;
 
-        String baseFilePath = localConfig.getUploadFilePath();
+        String baseFilePath = LocalConfig.getUploadFilePath();
         String filePath = baseFilePath + sepa + imageTag + sepa + Year + sepa + Month;
         createDirectory(filePath);
 
@@ -47,7 +43,7 @@ public class GetImageUrlServiceImpl extends ServiceImpl<ImageUrlMapper,ImageInfo
         try {
             //将上传文件写到服务器上指定的文件
             file.transferTo(targetFile);
-            String saveUrl =localConfig.getBaseurl() + imageTag + "/" +  Year + "/" + Month + "/" + newFileName;
+            String saveUrl =LocalConfig.getBaseurl() + imageTag + "/" +  Year + "/" + Month + "/" + newFileName;
 
             ImageInfo imageInfo = new ImageInfo();
             imageInfo.setNewImageName(newFileName);

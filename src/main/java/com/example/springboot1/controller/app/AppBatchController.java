@@ -20,7 +20,7 @@ import java.util.List;
  *  已检测零件批次的查询接口
  */
 @RestController
-@RequestMapping("/api/sysBatch")
+@RequestMapping("/app/sysBatch")
 public class AppBatchController extends BaseController
 {
     @Autowired

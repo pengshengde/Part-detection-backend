@@ -1,5 +1,6 @@
 package com.example.springboot1.controller.app;
 
+import com.example.springboot1.common.browser.config.RuoYiConfig;
 import com.example.springboot1.common.browser.constant.HttpStatus;
 import com.example.springboot1.common.browser.core.controller.BaseController;
 import com.example.springboot1.common.browser.core.domain.AjaxResult;
@@ -28,14 +29,12 @@ import java.util.Map;
  * 已检测图片的查询接口
  */
 @RestController
-@RequestMapping("/api/image")
+@RequestMapping("/app/image")
 public class AppImageController extends BaseController {
 
     @Autowired
     private ISysImageService imageService;
 
-    @Autowired
-    private LocalConfig localConfig;
 
     @Autowired
     private ISysPartService partService;
@@ -93,8 +92,9 @@ public class AppImageController extends BaseController {
         SysImage image = new SysImage();
         String imageName = imageData.getPartName() + imageData.getImageName();
 
-        image.setPartId(partId);
-        image.setImageName(imageName);
+        image.setPartId(partId);    // 设置图片的零件ID
+        image.setPartTypeId(partService.selectPartById(partId).getPartTypeId());   // 设置图片的零件类型ID
+        image.setImageName(imageName);  // 设置图片的名称
 
         if (!imageService.checkImageNameUnique(image)){
             return TableDataInfo.error(HttpStatus.CONFLICT, "图片'" + image.getImageName() + "'已存在，请勿重复添加");
@@ -104,15 +104,16 @@ public class AppImageController extends BaseController {
         MultipartFile fileOriginal = HttpUtils.base64ToMultipartFile(imageName, imageData.getImageBase64());
         Map<String,String> mapOriginal = imageService.uploadImage(fileOriginal, "original");
 
-        image.setOriginalImageUrl(mapOriginal.get("imageUrl"));
-        image.setOriginalImageName(mapOriginal.get("imageRename"));
+        image.setOriginalImageUrl(mapOriginal.get("imageUrl"));   // 设置图片的URL
+        image.setOriginalImageName(mapOriginal.get("imageRename"));  // 设置图片重命名名称
 
-        String dectionResult = HttpUtils.pythonPost(localConfig.getPythonurl(),imageName, imageData.getImageBase64());   // 将上传的到的图片post到python接口
-        MmdectionResult mmdectionResult = HttpUtils.postResultToEntity(dectionResult);                                  // 得到python接口返回的检测结果
+        String detectionResult = HttpUtils.pythonPost(LocalConfig.getPythonurl(),imageName, imageData.getImageBase64());   // 将上传的到的图片post到python接口
+        MmdectionResult mmdectionResult = HttpUtils.postResultToEntity(detectionResult);                                  // 得到python接口返回的检测结果
 
         MultipartFile fileResult = HttpUtils.base64ToMultipartFile(imageName,mmdectionResult.getImageResultBase64());   // 将获得的base64转化成file文件
         Map<String,String> mapResult = imageService.uploadImage(fileResult,"result");                       // 获得检测完图片的Url,保存在文件夹的/result
 
+        image.setImageType(mapResult.get("imageType"));
         image.setResultImageUrl(mapResult.get("imageUrl"));
         image.setResultImageName(mapResult.get("imageRename"));
 
@@ -123,7 +124,7 @@ public class AppImageController extends BaseController {
 
         imageService.insertImage(image);
 
-        startPage();
+
         List<SysImage> list = imageService.selectImageList(image);
 
         return getDataTable(list);

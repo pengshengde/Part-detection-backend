@@ -30,9 +30,6 @@ public class GetImageController {
     private GetImageServiceImpl getImageServiceImpl;
 
     @Autowired
-    LocalConfig localConfig;
-
-    @Autowired
     HttpUtils httpUtils;
 
     @Autowired
@@ -96,9 +93,9 @@ public class GetImageController {
             if (saveImage){
                 ImageResult imageResult = new ImageResult();
 
-                String nowTime = localConfig.GetNowTime();                                 // 获取当前时间
+                String nowTime = LocalConfig.GetNowTime();                                 // 获取当前时间
 
-                String dectionResult = httpUtils.pythonPost(localConfig.getPythonurl(),image_id,image_base64);   // 将上传的到的图片post到python接口
+                String dectionResult = httpUtils.pythonPost(LocalConfig.getPythonurl(),image_id,image_base64);   // 将上传的到的图片post到python接口
                 MmdectionResult mmdectionResult = httpUtils.postResultToEntity(dectionResult);                   // 得到python接口返回的检测结果
                 System.out.println(mmdectionResult.toString());
 

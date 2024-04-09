@@ -59,6 +59,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!--达梦数据库依赖-->
+		<dependency>
+			<groupId>com.dameng</groupId>
+			<artifactId>DmJdbcDriver18</artifactId>
+			<version>8.1.1.193</version>
+		</dependency>
+
 		<!-- web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -1,10 +1,9 @@
 package com.example.springboot1.service.Impl;
 
-import com.example.springboot1.common.browser.core.domain.BaseEntity;
+import com.example.springboot1.common.browser.config.RuoYiConfig;
 import com.example.springboot1.common.browser.utils.StringUtils;
 import com.example.springboot1.config.LocalConfig;
 import com.example.springboot1.entity.browser.quality.*;
-import com.example.springboot1.entity.client.ImageInfo;
 import com.example.springboot1.mapper.*;
 import com.example.springboot1.service.ISysImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +37,6 @@ public class SysImageServiceImpl implements ISysImageService
 
     @Autowired
     private SysPartDefectTypeMapper partDefectTypeMapper;
-
-    @Autowired
-    LocalConfig localConfig;
 
     /**
      * 根据条件查询检测图片的数据
@@ -146,7 +142,8 @@ public class SysImageServiceImpl implements ISysImageService
 
         String sepa = File.separator;
 
-        String baseFilePath = localConfig.getUploadFilePath();
+        String baseFilePath = LocalConfig.getUploadFilePath();
+
         String filePath = baseFilePath + sepa + imageTag + sepa + Year + sepa + Month;
         createDirectory(filePath);
 
@@ -158,14 +155,13 @@ public class SysImageServiceImpl implements ISysImageService
         try {
             //将上传文件写到服务器上指定的文件
             file.transferTo(targetFile);
-            String saveUrl =localConfig.getBaseurl() + imageTag + "/" +  Year + "/" + Month + "/" + newImageName;
+            String saveUrl =LocalConfig.getBaseurl() +"/" + imageTag + "/" +  Year + "/" + Month + "/" + newImageName;
 
             Map<String,String> map = new HashMap<String,String>(2);
 
             map.put("imageUrl",saveUrl);
             map.put("imageRename",newImageName);
-            ImageInfo imageInfo = new ImageInfo();
-
+            map.put("imageType",fileNameSuffix);
             return map;
         } catch (IOException e) {
             e.printStackTrace();
@@ -234,7 +230,10 @@ public class SysImageServiceImpl implements ISysImageService
             }
         }
         // 最后批量插入/更新零件的缺陷信息
-        partDefectTypeMapper.batchInsertPartDefectType(list);
+        if(!list.isEmpty()){
+            partDefectTypeMapper.batchInsertPartDefectType(list);
+        }
+
     }
 
     /**

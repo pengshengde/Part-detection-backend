@@ -33,6 +33,7 @@ public class RuoYiConfig
     /** 验证码类型 */
     private static String captchaType;
 
+
     public String getName()
     {
         return name;
